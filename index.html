@@ -3,41 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Методичка по финансовым рынкам | Павел Нестеров</title>
+  <title>Финансовая азбука для юных миллионеров — Павел Нестеров</title>
   
-  <!-- Шрифты Google Fonts: Inter и JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  
-  <!-- Библиотека графиков Chart.js -->
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root {
-      --bg-dark: #080c14;
-      --bg-surface: #101623;
-      --bg-card: #172033;
-      --bg-card-alt: #1c273e;
-      --border: #2b384e;
-      --border-focus: #3b82f6;
-      --accent: #2563eb;
-      --accent-light: #60a5fa;
-      --accent-glow: rgba(37, 99, 235, 0.25);
-      --usd-green: #10b981;
-      --usd-glow: rgba(16, 185, 129, 0.15);
-      --rub-orange: #f59e0b;
-      --danger: #ef4444;
-      --danger-bg: rgba(239, 68, 68, 0.12);
-      --success: #10b981;
-      --success-bg: rgba(16, 185, 129, 0.12);
-      --text-white: #f8fafc;
+      --bg-body: #0d1322;
+      --bg-card: #162035;
+      --bg-subtle: #1e2c47;
+      --border-color: #2b3d63;
+      --accent: #ffb703;
+      --accent-alt: #00b4d8;
+      --success: #2ec4b6;
+      --danger: #e71d36;
+      --text-main: #f8f9fa;
       --text-muted: #94a3b8;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --radius-sm: 10px;
+      --radius-md: 18px;
+      --radius-lg: 26px;
+      --font-title: 'Comfortaa', cursive, sans-serif;
+      --font-body: 'Nunito', -apple-system, sans-serif;
     }
 
     * {
@@ -48,146 +37,139 @@
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      font-family: var(--font-main);
-      line-height: 1.65;
-      padding-bottom: 96px;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.7;
+      padding-bottom: 100px;
       overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
     }
 
-    /* Верхняя панель управления */
+    /* Шапка сайта */
     .top-header {
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(16, 22, 35, 0.96);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 16px 12px;
+      background: rgba(22, 32, 53, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--border-color);
+      padding: 10px 16px;
     }
 
-    .author-badge {
+    .author-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: linear-gradient(90deg, rgba(37, 99, 235, 0.18), rgba(16, 185, 129, 0.18));
-      border: 1px solid rgba(59, 130, 246, 0.45);
-      color: #93c5fd;
+      background: linear-gradient(90deg, #ffb703, #fb8500);
+      color: #0d1322;
       font-size: 11.5px;
-      font-weight: 800;
+      font-weight: 900;
       padding: 4px 12px;
-      border-radius: 9999px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      border-radius: 20px;
+      letter-spacing: 0.3px;
       margin-bottom: 6px;
+      text-transform: uppercase;
     }
 
-    .header-row {
+    .header-nav-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .topic-counter-text {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text-muted);
+    .badge-counter {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-alt);
     }
 
-    .btn-drawer-trigger {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-white);
-      font-size: 12.5px;
-      font-weight: 700;
+    .btn-toc-open {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: #fff;
       padding: 6px 14px;
       border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 800;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s;
     }
 
-    .btn-drawer-trigger:hover, .btn-drawer-trigger:active {
-      background: var(--border);
-      border-color: var(--accent-light);
-    }
-
-    .progress-track {
+    .progress-line {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.05);
+      height: 4px;
+      background: var(--bg-subtle);
     }
 
-    .progress-fill {
+    .progress-line-fill {
       height: 100%;
-      background: linear-gradient(90deg, #3b82f6, #10b981);
-      width: 12.5%;
-      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(90deg, #00b4d8, #2ec4b6, #ffb703);
+      width: 16.6%;
+      transition: width 0.3s ease;
     }
 
-    /* Основная разметка страниц */
-    .app-viewport {
-      max-width: 740px;
+    /* Контейнер тем */
+    .container {
+      max-width: 680px;
       margin: 0 auto;
-      padding: 20px 16px;
+      padding: 18px 16px;
     }
 
-    .topic-screen {
+    .page-screen {
       display: none;
-      animation: screenEnter 0.25s ease-out;
+      animation: popIn 0.25s ease-out;
     }
 
-    .topic-screen.active {
+    .page-screen.active {
       display: block;
     }
 
-    @keyframes screenEnter {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
     }
 
-    /* Типографика */
+    /* Текстовые блоки */
     h1 {
-      font-size: 24px;
-      font-weight: 800;
-      line-height: 1.25;
+      font-family: var(--font-title);
+      font-size: 23px;
+      font-weight: 700;
       color: #ffffff;
+      line-height: 1.35;
       margin-bottom: 6px;
     }
 
-    .reading-time-pill {
+    .read-time-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       font-size: 12px;
-      font-weight: 600;
-      color: #93c5fd;
-      background: rgba(59, 130, 246, 0.12);
-      border: 1px solid rgba(59, 130, 246, 0.2);
-      padding: 2px 10px;
-      border-radius: var(--radius-sm);
+      font-weight: 800;
+      color: #ffb703;
+      background: rgba(255, 183, 3, 0.12);
+      border: 1px solid rgba(255, 183, 3, 0.3);
+      padding: 3px 10px;
+      border-radius: 8px;
       margin-bottom: 12px;
     }
 
-    .lead-paragraph {
+    .topic-desc {
       font-size: 15px;
       color: var(--text-muted);
-      margin-bottom: 22px;
-      line-height: 1.6;
+      margin-bottom: 20px;
+      font-weight: 600;
     }
 
     h2 {
-      font-size: 18.5px;
-      font-weight: 700;
-      color: #f1f5f9;
-      margin: 28px 0 14px;
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: #ffb703;
+      margin: 26px 0 12px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -195,323 +177,281 @@
 
     h3 {
       font-size: 16px;
-      font-weight: 700;
-      color: var(--accent-light);
+      color: #00b4d8;
       margin: 18px 0 10px;
+      font-weight: 800;
     }
 
     p {
-      font-size: 14.5px;
-      color: #cbd5e1;
-      margin-bottom: 15px;
-      line-height: 1.65;
+      font-size: 15.5px;
+      color: #e2e8f0;
+      margin-bottom: 14px;
     }
 
     ul, ol {
       padding-left: 20px;
       margin-bottom: 16px;
+      font-size: 15px;
       color: #cbd5e1;
-      font-size: 14.5px;
     }
 
     li {
       margin-bottom: 8px;
-      line-height: 1.55;
     }
-
-    strong {
-      color: #ffffff;
-      font-weight: 700;
-    }
-
-    /* Индикатор риска */
-    .risk-panel {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 12px 16px;
-      margin-bottom: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .risk-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12.5px;
-      font-weight: 700;
-    }
-
-    .risk-scale {
-      display: flex;
-      gap: 6px;
-      height: 8px;
-    }
-
-    .risk-tick {
-      flex: 1;
-      border-radius: 4px;
-      background: #252e3e;
-    }
-
-    .risk-tick.lvl-green { background: #10b981; }
-    .risk-tick.lvl-blue { background: #3b82f6; }
-    .risk-tick.lvl-yellow { background: #f59e0b; }
-    .risk-tick.lvl-red { background: #ef4444; }
 
     /* Карточки */
-    .card {
+    .fun-card {
       background: var(--bg-card);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 16px;
       margin-bottom: 18px;
+      position: relative;
     }
 
-    .card-usd {
-      border-left: 4px solid var(--usd-green);
-      background: linear-gradient(90deg, var(--usd-glow) 0%, var(--bg-card) 100%);
+    .fun-card.highlight {
+      border-color: #ffb703;
+      background: linear-gradient(135deg, rgba(255, 183, 3, 0.08) 0%, var(--bg-card) 100%);
     }
 
-    .card-risk {
-      border-left: 4px solid var(--danger);
-      background: linear-gradient(90deg, var(--danger-bg) 0%, var(--bg-card) 100%);
+    .fun-card.safe {
+      border-color: #2ec4b6;
+      background: linear-gradient(135deg, rgba(46, 196, 182, 0.08) 0%, var(--bg-card) 100%);
     }
 
-    .card-accent {
-      border-left: 4px solid var(--accent);
-      background: linear-gradient(90deg, var(--accent-glow) 0%, var(--bg-card) 100%);
+    .fun-card.danger {
+      border-color: #e71d36;
+      background: linear-gradient(135deg, rgba(231, 29, 54, 0.08) 0%, var(--bg-card) 100%);
     }
 
-    /* Вычислительные блоки */
-    .math-box {
-      background: #090d15;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 14px 16px;
+    /* Опасномометр */
+    .danger-meter {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
       margin: 16px 0;
-      font-family: var(--font-mono);
-      font-size: 13px;
+      border: 1px solid var(--border-color);
     }
 
-    .math-row {
+    .danger-meta {
       display: flex;
       justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-      gap: 12px;
-    }
-
-    .math-row:last-child {
-      border-bottom: none;
-      padding-top: 10px;
-      font-weight: 700;
-      color: #93c5fd;
-      font-size: 13.5px;
-    }
-
-    /* Таблицы */
-    .table-responsive {
-      overflow-x: auto;
-      margin: 18px 0;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
       font-size: 13px;
-      text-align: left;
-      background: var(--bg-surface);
+      font-weight: 800;
+      margin-bottom: 8px;
     }
 
-    th {
-      background: var(--bg-card-alt);
-      color: #ffffff;
-      padding: 11px 13px;
-      font-weight: 700;
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
+    .danger-track {
+      display: flex;
+      gap: 6px;
+      height: 10px;
     }
 
-    td {
-      padding: 11px 13px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: #cbd5e1;
+    .danger-pip {
+      flex: 1;
+      border-radius: 5px;
+      background: #2b3d63;
     }
 
-    /* Графические контейнеры */
-    .chart-container {
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
+    .danger-pip.green { background: #2ec4b6; }
+    .danger-pip.yellow { background: #ffb703; }
+    .danger-pip.orange { background: #fb8500; }
+    .danger-pip.red { background: #e71d36; }
+
+    /* Калькуляторы в стиле чека */
+    .story-calc {
+      background: #0a0e1a;
+      border: 2px dashed #3a4d75;
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 18px 0;
+      font-size: 14.5px;
+    }
+
+    .calc-line {
+      display: flex;
+      justify-content: space-between;
+      padding: 5px 0;
+      border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+    }
+
+    .calc-line.total {
+      border-bottom: none;
+      padding-top: 8px;
+      font-weight: 900;
+      color: #ffb703;
+      font-size: 15.5px;
+    }
+
+    /* Иллюстрации SVG */
+    .visual-box {
+      background: #0a0e1a;
+      border: 2px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 16px 12px;
-      margin: 22px 0;
-    }
-
-    .chart-caption {
-      font-size: 13.5px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #f1f5f9;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-left: 4px;
-    }
-
-    /* SVG контейнеры */
-    .svg-diagram-card {
-      background: #0b101a;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 16px;
       margin: 20px 0;
       text-align: center;
     }
 
-    .svg-diagram-card svg {
+    .visual-box svg {
       max-width: 100%;
       height: auto;
       display: block;
       margin: 0 auto;
     }
 
-    .svg-caption-text {
-      font-size: 12px;
-      font-weight: 500;
+    .visual-caption {
+      font-size: 12.5px;
+      font-weight: 700;
       color: var(--text-muted);
       margin-top: 10px;
     }
 
-    /* Тесты */
-    .quiz-card-group {
-      background: #0c121e;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 22px 14px;
-      margin: 36px 0 16px;
+    /* Графики Chart.js */
+    .chart-box {
+      background: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px 12px;
+      margin: 20px 0;
     }
 
-    .quiz-group-title {
-      border-bottom: 1px solid var(--border);
+    .chart-box h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+      padding-left: 6px;
+    }
+
+    /* Секция тестирования */
+    .quiz-zone {
+      background: #0d1527;
+      border: 2px solid #324670;
+      border-radius: var(--radius-lg);
+      padding: 20px 14px;
+      margin: 35px 0 16px;
+    }
+
+    .quiz-zone-header {
+      border-bottom: 2px solid var(--border-color);
       padding-bottom: 12px;
       margin-bottom: 18px;
     }
 
-    .quiz-group-title h3 {
-      font-size: 17px;
-      color: #ffffff;
+    .quiz-zone-header h3 {
+      font-family: var(--font-title);
+      font-size: 18px;
+      color: #fff;
       margin: 0;
     }
 
-    .quiz-block {
+    .quiz-card {
       background: var(--bg-card);
-      border: 1px solid var(--border);
+      border: 2px solid var(--border-color);
       border-radius: var(--radius-md);
       padding: 16px;
       margin-bottom: 18px;
     }
 
-    .quiz-q-text {
-      font-size: 14.5px;
-      font-weight: 700;
+    .quiz-q-title {
+      font-size: 15px;
+      font-weight: 800;
       color: #ffffff;
       margin-bottom: 12px;
       line-height: 1.45;
     }
 
-    .quiz-options-list {
+    .quiz-answers {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .btn-option {
-      background: var(--bg-card-alt);
-      border: 1px solid var(--border);
-      color: #e2e8f0;
+    .btn-ans {
+      background: var(--bg-subtle);
+      border: 2px solid var(--border-color);
+      color: #f8f9fa;
       padding: 12px 14px;
       border-radius: var(--radius-sm);
-      font-size: 13.5px;
+      font-size: 14px;
+      font-weight: 700;
       text-align: left;
       cursor: pointer;
       line-height: 1.4;
-      transition: all 0.15s;
+      transition: all 0.15s ease;
     }
 
-    .btn-option:active {
-      transform: scale(0.99);
+    .btn-ans:active {
+      transform: scale(0.98);
     }
 
-    .btn-option.correct-choice {
-      background: rgba(16, 185, 129, 0.25) !important;
-      border-color: #10b981 !important;
-      color: #ffffff !important;
-      font-weight: 700;
+    .btn-ans.correct-hit {
+      background: rgba(46, 196, 182, 0.25) !important;
+      border-color: #2ec4b6 !important;
+      color: #fff !important;
     }
 
-    .btn-option.wrong-choice {
-      background: rgba(239, 68, 68, 0.25) !important;
-      border-color: #ef4444 !important;
-      color: #ffffff !important;
+    .btn-ans.wrong-hit {
+      background: rgba(231, 29, 54, 0.25) !important;
+      border-color: #e71d36 !important;
+      color: #fff !important;
     }
 
-    .feedback-panel {
-      margin-top: 12px;
-      padding: 12px;
+    .explanation-box {
+      margin-top: 14px;
+      padding: 12px 14px;
       border-radius: var(--radius-sm);
-      font-size: 13px;
+      font-size: 13.5px;
+      font-weight: 600;
       display: none;
       line-height: 1.5;
     }
 
-    .feedback-panel.visible-correct {
+    .explanation-box.correct {
       display: block;
-      background: var(--success-bg);
-      border: 1px solid var(--success);
-      color: #a7f3d0;
+      background: rgba(46, 196, 182, 0.15);
+      border: 2px solid #2ec4b6;
+      color: #2ec4b6;
     }
 
-    .feedback-panel.visible-wrong {
+    .explanation-box.wrong {
       display: block;
-      background: var(--danger-bg);
-      border: 1px solid var(--danger);
-      color: #fecaca;
+      background: rgba(231, 29, 54, 0.15);
+      border: 2px solid #e71d36;
+      color: #ff6b6b;
     }
 
-    .status-badge {
-      font-weight: 800;
+    .badge-status {
+      font-weight: 900;
       text-transform: uppercase;
-      font-size: 11.5px;
+      font-size: 12px;
       display: block;
       margin-bottom: 4px;
     }
 
-    /* Нижняя панель */
-    .bottom-nav-bar {
+    /* Навигация внизу */
+    .dock-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 999;
-      background: rgba(16, 22, 35, 0.97);
+      background: rgba(22, 32, 53, 0.98);
       backdrop-filter: blur(14px);
-      border-top: 1px solid var(--border);
+      border-top: 2px solid var(--border-color);
       padding: 10px 16px;
       display: flex;
       gap: 12px;
-      max-width: 740px;
+      max-width: 680px;
       margin: 0 auto;
     }
 
-    .btn-nav {
+    .btn-nav-act {
       flex: 1;
-      padding: 12px;
-      font-size: 14px;
-      font-weight: 700;
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 800;
       border-radius: var(--radius-md);
       border: none;
       cursor: pointer;
@@ -519,1531 +459,1046 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      transition: all 0.2s;
     }
 
-    .btn-nav-prev {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-white);
+    .btn-step-prev {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
+      color: #fff;
     }
 
-    .btn-nav-prev:disabled {
-      opacity: 0.35;
+    .btn-step-prev:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
     }
 
-    .btn-nav-next {
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #ffffff;
-      box-shadow: 0 4px 14px var(--accent-glow);
+    .btn-step-next {
+      background: linear-gradient(135deg, #ffb703, #fb8500);
+      color: #0d1322;
+      box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
     }
 
-    /* Выдвижная шторка оглавления */
-    .drawer-scrim {
+    /* Шторка содержания */
+    .sheet-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(5px);
       z-index: 2000;
       display: none;
-      opacity: 0;
-      transition: opacity 0.25s ease;
     }
 
-    .drawer-scrim.open {
+    .sheet-modal.open {
       display: block;
-      opacity: 1;
     }
 
-    .drawer-panel {
+    .sheet-body {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
-      background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      border-radius: 24px 24px 0 0;
-      padding: 20px 16px 36px;
+      background: var(--bg-card);
+      border-top: 2px solid var(--border-color);
+      border-radius: 26px 26px 0 0;
+      padding: 22px 18px 40px;
       max-height: 85vh;
       overflow-y: auto;
-      transform: translateY(100%);
-      transition: transform 0.25s ease-out;
     }
 
-    .drawer-scrim.open .drawer-panel {
-      transform: translateY(0);
-    }
-
-    .drawer-header {
+    .sheet-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    .drawer-header h3 {
-      font-size: 18px;
-      color: #ffffff;
+    .sheet-head h3 {
+      font-family: var(--font-title);
+      font-size: 19px;
+      color: #fff;
       margin: 0;
     }
 
-    .btn-drawer-close {
+    .btn-sheet-x {
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 26px;
+      font-size: 28px;
       cursor: pointer;
       line-height: 1;
-      padding: 4px 8px;
     }
 
-    .drawer-links-box {
+    .sheet-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
     }
 
-    .drawer-topic-link {
+    .sheet-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 14px;
+      padding: 12px 16px;
       border-radius: var(--radius-sm);
-      background: var(--bg-card);
+      background: var(--bg-subtle);
       border: 1px solid transparent;
-      color: #cbd5e1;
-      font-size: 13.5px;
+      color: #e2e8f0;
+      font-size: 14.5px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.15s;
     }
 
-    .drawer-topic-link.current-link {
-      border-color: var(--accent);
-      background: rgba(37, 99, 235, 0.15);
-      color: #93c5fd;
-      font-weight: 700;
+    .sheet-item.now {
+      border-color: #ffb703;
+      background: rgba(255, 183, 3, 0.15);
+      color: #ffb703;
     }
   </style>
 </head>
 <body>
 
-  <!-- ВЕРХНЯЯ ШАПКА -->
+  <!-- ШАПКА -->
   <header class="top-header">
-    <div class="author-badge">
+    <div class="author-chip">
       <span>★</span> Методичка составлена Павлом Нестеровым
     </div>
-    <div class="header-row">
-      <span class="topic-counter-text" id="counterDisplay">Тема 1 из 8</span>
-      <button class="btn-drawer-trigger" id="openDrawerBtn" type="button">
-        <span>☰</span> Оглавление
+    <div class="header-nav-row">
+      <span class="badge-counter" id="stepIndicator">Глава 1 из 6</span>
+      <button class="btn-toc-open" id="openTocBtn" type="button">
+        <span>☰</span> Главы книги
       </button>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="barFill"></div>
+    <div class="progress-line">
+      <div class="progress-line-fill" id="progressFill"></div>
     </div>
   </header>
 
-  <!-- ОСНОВНАЯ ОБЛАСТЬ СТРАНИЦ -->
-  <main class="app-viewport">
+  <main class="container">
 
-    <!-- СТРАНИЦА 1: КЭШ VS ИНВЕСТИЦИИ В USD И РИСКАХ -->
-    <section class="topic-screen active" id="screen-1">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Хранение денег vs Инвестиции: Рубль, Доллар или Активы?</h1>
-      <p class="lead-paragraph">Анатомия обесценения капитала, фундаментальное сравнение покупательной способности рубля и доллара США, разрушение мифа о «безопасном хранении наличных».</p>
+    <!-- ГЛАВА 1: БАНКОВСКИЕ ВКЛАДЫ -->
+    <section class="page-screen active" id="chapter-1">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 1. Банковский вклад: Волшебный сундучок гнома</h1>
+      <p class="topic-desc">Как работает банк, откуда берутся бесплатные проценты и почему деньги под кроватью худеют от злого дракона Инфляции.</p>
 
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Уровень риска удержания наличных денег:</span>
-          <span style="color:#ef4444;">100% потеря от инфляции</span>
+      <div class="danger-meter">
+        <div class="danger-meta">
+          <span>Опасномометр (Риск потерять деньги):</span>
+          <span style="color:#2ec4b6;">Очень безопасно (1 из 5) 🧸</span>
         </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-        </div>
-      </div>
-
-      <h2>Рублевая иллюзия богатства vs Долларовая реальность</h2>
-      <p>Многие начинающие инвесторы совершают фундаментальную ошибку: они оценивают свой капитал исключительно в рублях. Если рублевый вклад принес <strong>+16% за год</strong>, инвестор чувствует рост богатства. Но экономика РФ зависит от глобального импорта — электроника, автомобили, оборудование, сырье и медикаменты имеют мировую долларовую себестоимость.</p>
-      
-      <p>Если за этот же год курс доллара к рублю (USD/RUB) вырос, например, на <strong>+28%</strong>, то реальная международная покупательная способность рублевого капитала снизилась. Инвестор номинально получил больше рублей, но фактически стал <strong>беднее в пересчете на реальные мировые блага</strong>.</p>
-
-      <div class="card card-usd">
-        <h3>Математический расчет: Депозит 16% против девальвации рубля</h3>
-        <p>Инвестор положил на депозит <strong>1 000 000 ₽</strong>. В начале года курс USD составлял <strong>90 ₽</strong> (сумма эквивалентна <strong>$11 111</strong>). Через 1 год курс вырос до <strong>115 ₽</strong>.</p>
-        <div class="math-box">
-          <div class="math-row"><span>Стартовый капитал (RUB / USD):</span><span>1 000 000 ₽ / $11 111</span></div>
-          <div class="math-row"><span>Баланс вклада через 1 год (+16%):</span><span>1 160 000 ₽</span></div>
-          <div class="math-row"><span>Эквивалент в USD по курсу 115 ₽:</span><span>$10 086</span></div>
-          <div class="math-row"><span>Рублевый результат:</span><span style="color:#10b981;">+160 000 ₽ (+16.0%)</span></div>
-          <div class="math-row"><span>Реальный долларовый результат:</span><span style="color:#ef4444;">-$1 025 (-9.2%)</span></div>
+        <div class="danger-track">
+          <div class="danger-pip green"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
         </div>
       </div>
 
-      <div class="card card-risk">
-        <h3>А если хранить наличные доллары «под подушкой»?</h3>
-        <p>Наличный доллар спасает от девальвации рубля, но <strong>он также обесценивается</strong>. Долларовая инфляция в США (US CPI — Consumer Price Index) в последние годы держалась в коридоре 3–8% в год. За 10 лет $10 000 наличных долларов теряют свыше трети своей покупательной способности на покупку американских и мировых товаров.</p>
+      <!-- Иллюстрация: Банк как мельница -->
+      <div class="visual-box">
+        <svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg">
+          <!-- Ты -->
+          <circle cx="80" cy="80" r="35" fill="#00b4d8"/>
+          <text x="80" y="85" fill="#fff" font-size="28" text-anchor="middle">🧒</text>
+          <text x="80" y="140" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Ты с копилкой</text>
+          <text x="80" y="160" fill="#ffb703" font-size="12" text-anchor="middle" font-family="sans-serif">Даёшь 1 000 ₽</text>
+
+          <!-- Стрелка в банк -->
+          <path d="M 130 80 L 220 80" stroke="#2ec4b6" stroke-width="4" stroke-dasharray="6,6"/>
+          <text x="175" y="70" fill="#2ec4b6" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">+15% в год</text>
+
+          <!-- Банк -->
+          <rect x="230" y="40" width="140" height="90" rx="12" fill="#1e2c47" stroke="#ffb703" stroke-width="3"/>
+          <text x="300" y="85" fill="#ffb703" font-size="36" text-anchor="middle">🏛️</text>
+          <text x="300" y="115" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">БАНК</text>
+
+          <!-- Стрелка предпринимателю -->
+          <path d="M 380 80 L 470 80" stroke="#fb8500" stroke-width="4" stroke-dasharray="6,6"/>
+          <text x="425" y="70" fill="#fb8500" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">Кредит 20%</text>
+
+          <!-- Пекарь -->
+          <circle cx="520" cy="80" r="35" fill="#fb8500"/>
+          <text x="520" y="85" fill="#fff" font-size="28" text-anchor="middle">👨‍🍳</text>
+          <text x="520" y="140" fill="#fff" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Дядя-пекарь</text>
+          <text x="520" y="160" fill="#94a3b8" font-size="12" text-anchor="middle" font-family="sans-serif">Печёт пиццу</text>
+
+          <rect x="50" y="180" width="500" height="30" rx="8" fill="#162035"/>
+          <text x="300" y="200" fill="#2ec4b6" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">Банк берет у тебя под 15%, отдает пекарю под 20%, а разницу 5% забирает себе!</text>
+        </svg>
+        <div class="visual-caption">Как банк крутит деньги и делится с тобой кусочком пирога</div>
       </div>
 
-      <!-- График темы 1 -->
-      <div class="chart-container">
-        <div class="chart-caption">📊 Сравнение покупательной способности $10 000 за 10 лет (в твердой валюте с учетом инфляции США)</div>
-        <canvas id="chartTopic1" height="230"></canvas>
+      <h2>Представь, что тебе подарили 10 000 рублей</h2>
+      <p>У тебя есть два пути, что сделать с этими деньгами:</p>
+      <ul>
+        <li><strong>Путь 1: Засунуть под матрас.</strong> Деньги лежат в темноте и скучают. Через год ты достаешь ту же самую бумажку в 10 000 рублей. Но вот беда: мороженое, которое стоило 100 рублей, теперь стоит 115 рублей! Из-за невидимого дракона по имени <strong>Инфляция</strong> на твои деньги теперь можно купить на 15 порций мороженого меньше. Деньги потеряли силу!</li>
+        <li><strong>Путь 2: Отнести в банк на вклад.</strong> Банкир кладёт твои деньги в бронированный сейф. Но они там не лежат просто так: банк одалживает их дяде-пекарю, чтобы тот купил большую печь для пиццы. Пекарь возвращает банку долг с наградой, а банк отдаёт тебе твои 10 000 рублей ПЛЮС ещё 1 500 рублей сверху в благодарность.</li>
+      </ul>
+
+      <div class="fun-card highlight">
+        <h3>Магия сложного процента: Снеговик из денег</h3>
+        <p>Если ты не будешь снимать подаренные банком проценты, они прилипают к твоим деньгам, как мокрый снег к снежку, когда ты катишь снеговика:</p>
+        <div class="story-calc">
+          <div class="calc-line"><span>Положил в 1-й год:</span><span>10 000 ₽</span></div>
+          <div class="calc-line"><span>Банк начислил (+15%):</span><span>+1 500 ₽</span></div>
+          <div class="calc-line"><span>Стало на 2-й год (снежок вырос):</span><span>11 500 ₽</span></div>
+          <div class="calc-line"><span>Банк начислил 15% на новую сумму:</span><span>+1 725 ₽</span></div>
+          <div class="calc-line total"><span>Через 5 лет на счете:</span><span>20 113 ₽ (сумма удвоилась сама!)</span></div>
+        </div>
       </div>
 
-      <h2>Сводная матрица классов активов в долларах и рисках</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Класс актива</th>
-              <th>Реальная дох-ть (USD)</th>
-              <th>Макс. историч. просадка</th>
-              <th>Валютный риск</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Рублевый кэш в сейфе</strong></td>
-              <td>Отрицательная (-12...-18%/год)</td>
-              <td>-100% (покупат. способность)</td>
-              <td>Экстремальный</td>
-            </tr>
-            <tr>
-              <td><strong>Наличный доллар в сейфе</strong></td>
-              <td>-3...-4% в год (US CPI)</td>
-              <td>Медленное непрерывное таяние</td>
-              <td>Низкий</td>
-            </tr>
-            <tr>
-              <td><strong>ОФЗ / Рублевые облигации</strong></td>
-              <td>0...3% в год в долларах</td>
-              <td>-25% при резких девальвациях</td>
-              <td>Высокий рублевый риск</td>
-            </tr>
-            <tr>
-              <td><strong>Замещающие облигации РФ</strong></td>
-              <td>6...9% годовых в долларах</td>
-              <td>-8...-12% (кредитный спред)</td>
-              <td>Привязаны к курсу USD</td>
-            </tr>
-            <tr>
-              <td><strong>Индекс акций бизнеса</strong></td>
-              <td>8...12% годовых в долларах</td>
-              <td>-35...-50% в кризисы</td>
-              <td>Бизнес индексирует цены</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="fun-card safe">
+        <h3>Супергерой АСВ: Почему вклад не сгорит?</h3>
+        <p>А что если банк закроется или его ограбят пираты? В России есть специальный государственный щит — <strong>Агентство по страхованию вкладов (АСВ)</strong>. Если банк сломается, государство выплатит тебе все твои накопления до <strong>1 400 000 рублей</strong>! Поэтому потерять деньги на обычном вкладе почти невозможно.</p>
       </div>
 
-      <!-- Тест к теме 1 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 1 (5 вопросов)</h3>
+      <!-- ТЕСТ ГЛАВА 1 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Проверь себя: Тест знатока вкладов (5 вопросов)</h3>
         </div>
 
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">1. Инвестор заработал +20% в рублях на депозите, но курс доллара за этот же год вырос на 30%. Каков реальный долларовый финансовый результат?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Прибыль +50%</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Прибыль +10%</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Реальный долларовый убыток около -7.7%</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Доходность осталась строго нулевой</button>
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">1. Почему хранить пачку денег под матрасом 5 лет — плохая идея?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Купюры могут запылиться и стать некрасивыми</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Инфляция поднимет цены на игрушки и еду, и на эти деньги можно будет купить намного меньше</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Деньги в темноте превращаются в фантики</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">2. Сохраняют ли наличные доллары США под подушкой 100% своей ценности за 10 лет?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Да, доллар — мировая валюта и не подвержен инфляции</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Нет, долларовая инфляция (US CPI) стабильно съедает покупательную способность на 3–5% в год</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Да, если хранить только стодолларовые купюры</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ценность растет благодаря дефициту наличных</button>
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">2. Откуда банк берет деньги, чтобы платить тебе проценты по вкладу?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Печатает их ночью на секретном принтере</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Находит клад на необитаемом острове</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Одалживает твои деньги бизнесу и людям под больший процент, а частью прибыли делится с тобой</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Какой инструмент в российской юрисдикции позволяет легально получать доходность в привязке к доллару США без риска блокировки Euroclear?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Замещающие облигации российских корпораций (номинированы в USD, расчеты в рублях по курсу ЦБ)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Обычные рублевые вклады до востребования</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Покупка наличных юаней в кассе</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фьючерс на погоду</button>
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-question quiz-q-title">3. Какую максимальную сумму в одном банке на 100% страхует государство через АСВ?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">До 1 400 000 рублей</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Ровно 100 000 рублей</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Миллиард рублей</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Что экономисты называют «рублевой иллюзией доходности»?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Комиссию брокера за конвертацию валюты</button>
-            <button class="choice-btn btn-option" onclick="handleQuizClick(this, 1)">Ошибочное списание налогов банком</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Временный мораторий на снятие депозитов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ощущение роста капитала из-за увеличения количества рублей, которое игнорирует обесценение валюты и инфляцию</button>
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">4. Что такое «сложный процент» простыми словами?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Очень трудная задачка по математике за 11 класс</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Когда проценты начисляются не только на твои деньги, но и на ранее начисленные проценты (эффект снежного кома)</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Комиссия, которую банк забирает себе</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">5. Почему акции компаний-экспортеров РФ (нефть, металлы, газ) часто выступают естественным щитом от девальвации рубля?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Государство освобождает экспортеров от всех налогов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">ЦБ выкупает их акции по фиксированной цене</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Их выручка формируется в твердой валюте или привязана к мировым ценам, а операционные затраты остаются рублевыми</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Экспортеры не подвержены рыночным рискам</button>
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">5. Если банк дает 10% в год, а мороженое за год подорожало на 15%, разбогател ли ты?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Да, рублей же на счете стало больше!</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Да, банк подарил тебе мороженое</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Нет, в пересчете на мороженое ты потерял около 5% покупательной способности</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
       </div>
     </section>
 
-    <!-- СТРАНИЦА 2: ОБЛИГАЦИИ И ОФЗ -->
-    <section class="topic-screen" id="screen-2">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Облигации и ОФЗ: Архитектура долгового рынка</h1>
-      <p class="lead-paragraph">Механика работы самого емкого финансового рынка: номинал, дисконт, купоны, расчет НКД, дюрация Маколея, влияние ставки ЦБ и виды ОФЗ (ПД, ПК, ИН).</p>
+    <!-- ГЛАВА 2: ОБЛИГАЦИИ -->
+    <section class="page-screen" id="chapter-2">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 2. Облигации: Долговая расписка с шоколадкой</h1>
+      <p class="topic-desc">Как одолжить денег огромному заводу или целому государству и получать за это регулярные подарки — «купоны».</p>
 
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Кредитный риск ОФЗ:</span>
-          <span style="color:#10b981;">Минимальный (надежность Минфина РФ)</span>
+      <div class="danger-meter">
+        <div class="danger-meta">
+          <span>Опасномометр (ОФЗ государства):</span>
+          <span style="color:#2ec4b6;">Очень надежно (1.5 из 5) 🛡️</span>
         </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-green"></div>
-          <div class="risk-tick"></div>
-          <div class="risk-tick"></div>
-          <div class="risk-tick"></div>
+        <div class="danger-track">
+          <div class="danger-pip green"></div>
+          <div class="danger-pip green"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
         </div>
       </div>
 
-      <!-- SVG диаграмма купона и НКД -->
-      <div class="svg-diagram-card">
-        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
-          <rect x="10" y="20" width="580" height="8" rx="4" fill="#252e3e"/>
-          <circle cx="50" cy="24" r="10" fill="#3b82f6"/>
-          <text x="50" y="55" fill="#93c5fd" font-size="11" text-anchor="middle" font-family="sans-serif">Купон №1 (0 ₽)</text>
+      <!-- Иллюстрация: Расписка Миши -->
+      <div class="visual-box">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Грамота облигации -->
+          <rect x="60" y="20" width="480" height="160" rx="14" fill="#1e2c47" stroke="#ffb703" stroke-width="3" stroke-dasharray="10,5"/>
+          <text x="300" y="55" fill="#ffb703" font-size="16" font-weight="bold" text-anchor="middle" font-family="sans-serif">📜 ОБЛИГАЦИЯ (ДОЛГОВАЯ РАСПИСКА)</text>
           
-          <circle cx="360" cy="24" r="8" fill="#f59e0b"/>
-          <text x="360" y="55" fill="#f59e0b" font-size="11" text-anchor="middle" font-family="sans-serif">Сделка на бирже (День 90)</text>
+          <text x="100" y="90" fill="#fff" font-size="13" font-family="sans-serif">Я, ОАО «Российские Железные Дороги», взял у тебя в долг:</text>
+          <text x="100" y="115" fill="#00b4d8" font-size="15" font-weight="bold" font-family="sans-serif">НОМИНАЛ = 1 000 РУБЛЕЙ на покупку новых поездов</text>
 
-          <circle cx="550" cy="24" r="10" fill="#10b981"/>
-          <text x="550" y="55" fill="#6ee7b7" font-size="11" text-anchor="middle" font-family="sans-serif">Купон №2 (50 ₽)</text>
+          <!-- Отрывные купончики -->
+          <rect x="90" y="130" width="120" height="35" rx="6" fill="#2ec4b6"/>
+          <text x="150" y="152" fill="#0d1322" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">КУПОН 1: 50 ₽ 🍫</text>
 
-          <line x1="50" y1="24" x2="360" y2="24" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
-          <text x="205" y="15" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">НКД = 25 ₽ (Покупатель возмещает Продавцу)</text>
+          <rect x="240" y="130" width="120" height="35" rx="6" fill="#2ec4b6"/>
+          <text x="300" y="152" fill="#0d1322" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">КУПОН 2: 50 ₽ 🍫</text>
 
-          <rect x="60" y="80" width="480" height="68" rx="8" fill="#172033" stroke="#3b82f6" stroke-width="1"/>
-          <text x="300" y="105" fill="#ffffff" font-size="12" text-anchor="middle" font-family="sans-serif">Принцип непрерывности дохода: продавец не теряет процент за 90 дней,</text>
-          <text x="300" y="127" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">а покупатель в день купона вернет себе ранее уплаченный продавцу НКД.</text>
+          <rect x="390" y="130" width="130" height="35" rx="6" fill="#fb8500"/>
+          <text x="455" y="152" fill="#0d1322" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">КОНЕЦ: 1000 ₽ + 50 ₽</text>
         </svg>
-        <div class="svg-caption-text">Схема накопления купонного дохода (НКД) при покупке и продаже облигации на бирже</div>
+        <div class="visual-caption">Облигация — это официальный документ, где написано, когда тебе вернут долг и сколько шоколадок подарят</div>
       </div>
 
-      <h2>Ключевые параметры облигации</h2>
+      <h2>История про соседа Мишу и крутой велосипед</h2>
+      <p>Представь: твой друг Миша мечтает о горном велосипеде за <strong>1 000 рублей</strong>, но у него нет всей суммы. Он подходит к тебе и говорит:</p>
+      <p><em>— «Одолжи мне 1 000 рублей на один год! Я напишу расписку. Каждые три месяца я буду приносить тебе по большой шоколадке за 50 рублей просто за то, что ты меня выручил. А ровно через год я верну обратно всю 1 000 рублей!»</em></p>
+      <p>Ты согласился. Эта официальная расписка в мире взрослых называется <strong>Облигацией</strong>.</p>
+
+      <h2>Главные секретные слова облигаций:</h2>
       <ul>
-        <li><strong>Номинал:</strong> Базовая сумма долга (для подавляющего большинства ОФЗ = 1 000 ₽). По этой цене эмитент погашает бумагу в конце срока.</li>
-        <li><strong>Чистая цена (Clean Price):</strong> Биржевая котировка, отображаемая в процентах от номинала (например, 82.5% = 825 ₽).</li>
-        <li><strong>Грязная цена (Dirty Price):</strong> Реальная сумма списания при покупке: <code style="color:#93c5fd;">Чистая цена в рублях + НКД</code>.</li>
-        <li><strong>Дюрация Маколея:</strong> Средневзвешенный срок возврата инвестиций с учетом купонов. Главное правило: <em>чем длиннее дюрация, тем сильнее падает рыночная цена облигации при росте ключевой ставки ЦБ</em>.</li>
+        <li><strong>Номинал:</strong> Сумма долга, написанная на бумажке (в России это почти всегда <strong>1 000 рублей</strong>). Ровно эту тысячу тебе обязаны вернуть в конце срока.</li>
+        <li><strong>Купон:</strong> Та самая шоколадка! Это проценты, которые тебе платят каждые несколько месяцев (например, 2 или 4 раза в год) прямо на карту. Раньше на ценных бумагах были настоящие бумажные купончики, от которых ножницами отрезали полоску при получении денег!</li>
+        <li><strong>Эмитент:</strong> Тот, кто просит в долг. Если деньги берет государство (Министерство финансов) — это <strong>ОФЗ (Облигации Федерального Займа)</strong>. Это самый надежный эмитент в стране: государство гарантирует возврат всей своей казной. А если деньги берет завод или сотовый оператор — это корпоративная облигация.</li>
       </ul>
 
-      <div class="card card-accent">
-        <h3>Пошаговый расчет доходности к погашению (YTM)</h3>
-        <p>Инвестор покупает ОФЗ-ПД 26238 со сроком до погашения <strong>3 года</strong>. Номинал — <strong>1 000 ₽</strong>. Рыночная цена — <strong>80% (800 ₽)</strong>. Фиксированный купон — <strong>80 ₽ в год</strong>.</p>
-        <div class="math-box">
-          <div class="math-row"><span>Затраты на покупку тела облигации:</span><span>800.00 ₽</span></div>
-          <div class="math-row"><span>Сумма купонов за 3 года (80 ₽ × 3):</span><span>+240.00 ₽</span></div>
-          <div class="math-row"><span>Дисконт к погашению (1 000 ₽ - 800 ₽):</span><span>+200.00 ₽</span></div>
-          <div class="math-row"><span>Итого суммарная прибыль за 3 года:</span><span>+440.00 ₽</span></div>
-          <div class="math-row"><span>Простая доходность за 3 года:</span><span>440 / 800 = 55.0%</span></div>
-          <div class="math-row"><span>Эффективная доходность к погашению (YTM):</span><span>~ 16.2% годовых</span></div>
-        </div>
+      <div class="fun-card highlight">
+        <h3>А что если Мише срочно понадобятся деньги? (Тайна НКД)</h3>
+        <p>Ты продержал облигацию полгода, получил 2 шоколадки, и вдруг захотел купить приставку. Ты можешь продать эту облигацию на бирже другому мальчику — Пете! Но как быть с шоколадкой, которая должна прийти через месяц? Неужели ты потеряешь проценты за то время, пока бумага была у тебя?</p>
+        <p><strong>Нет! На бирже всё честно:</strong> работает волшебное правило <strong>НКД (Накопленный Купонный Доход)</strong>. Петя, покупая у тебя бумагу, сразу выплачивает тебе стоимость шоколадки за те дни, что ты ею владел! А потом он сам заберет всю шоколадку целиком в положенный день.</p>
       </div>
 
-      <h2>Разновидности государственных облигаций (ОФЗ)</h2>
-      <ul>
-        <li><strong>ОФЗ-ПД (Постоянный доход):</strong> Фиксированный купон на весь срок. Идеальны при ожидании снижения ставок ЦБ.</li>
-        <li><strong>ОФЗ-ПК (Переменный купон, флоатеры):</strong> Купон привязан к ставке RUONIA (практически равен ключевой ставке ЦБ). Тело бумаги почти не проседает в цене при ужесточении ДКП.</li>
-        <li><strong>ОФЗ-ИН (Индексируемый номинал, линкеры):</strong> Номинал ежедневно индексируется на величину инфляции Росстата с задержкой в 3 месяца, плюс небольшой фиксированный купон (2.5–3%).</li>
-      </ul>
-
-      <!-- Тест к теме 2 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 2 (5 вопросов)</h3>
+      <!-- ТЕСТ ГЛАВА 2 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Проверь себя: Тест знатока облигаций (5 вопросов)</h3>
         </div>
 
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">1. ЦБ РФ резко поднял ключевую ставку с 16% до 21%. Что произойдет с рыночной ценой ранее выпущенных 10-летних ОФЗ с фиксированным купоном 9%?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Их рыночная цена вырастет</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Их цена упадет, чтобы доходность к погашению (YTM) сравнялась с новыми рыночными ставками</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Цена не изменится, так как номинал зафиксирован государством</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Облигации будут принудительно погашены</button>
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">1. Что такое «Облигация» самым простым языком?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Долговая расписка: ты дал в долг компании или стране, а они платят проценты и вернут всю сумму в срок</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Лотерейный билет, по которому можно выиграть миллион</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Штраф за нарушение правил дорожного движения</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">2. В терминале котировка ОФЗ отображается как 88.50. Сколько рублей стоит тело этой облигации при номинале 1 000 ₽?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">885.00 ₽ (88.5% от номинала)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">88.50 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">1 088.50 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">8 850.00 ₽</button>
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">2. Как называются регулярные денежные выплаты по облигациям?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Зарплата</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Сдача</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Купоны</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">3. Что такое кредитный спред облигации?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Комиссия биржи за выставление заявки в стакан</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Разница между ценой покупки и продажи валюты</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Премия в доходности (в % годовых), которую эмитент предлагает инвестору сверх безрисковой ставки ОФЗ за риск дефолта</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Скидка на оплату НДФЛ</button>
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">3. Что такое ОФЗ?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Особая фабрика игрушек</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Облигации Федерального Займа — когда ты одалживаешь деньги государству Россия под процент</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Футбольная команда</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Какой тип ОФЗ наименее подвержен падению рыночной цены в цикле повышения ключевой ставки ЦБ?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">ОФЗ-ПД с погашением через 15 лет</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Бескупонные облигации</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">ОФЗ-АД с амортизацией</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">ОФЗ-ПК (флоатеры с плавающим купоном, привязанным к RUONIA)</button>
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">4. Кто вернет тебе деньги за дни владения облигацией, если ты продашь её за неделю до купона?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Новый покупатель компенсирует мне НКД (накопленный доход) прямо в момент покупки</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Никто, все проценты сгорят</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Президент страны лично</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Если инвестор держит ОФЗ строго до даты погашения, влияет ли временная биржевая просадка цены бумаги на итоговую сумму возврата?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Да, эмитент вернет только упавшую рыночную стоимость</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Нет, в день погашения Минфин РФ выплатит ровно 100% номинала (1 000 ₽) и последний купон</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Инвестору придется доплатить разницу брокеру</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Выплата откладывается на 3 года</button>
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">5. Что случится, если завод, выпустивший облигацию, полностью обанкротится?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Завод подарит тебе новые станки</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Ничего страшного, банк вернет деньги по страховке</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Это риск: наступит дефолт, и инвестор может потерять часть или все одолженные заводу деньги</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
       </div>
     </section>
 
-    <!-- СТРАНИЦА 3: АКЦИИ -->
-    <section class="topic-screen" id="screen-3">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Акции: Долевое совладение и мультипликаторы</h1>
-      <p class="lead-paragraph">Как оценивать фундаментальную стоимость бизнеса: обыкновенные и привилегированные акции, механика дивидендного гэпа, мультипликаторы P/E, EV/EBITDA, Net Debt/EBITDA и расчет полной доходности.</p>
+    <!-- ГЛАВА 3: АКЦИИ -->
+    <section class="page-screen" id="chapter-3">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 3. Акции: Как стать хозяином пиццерии</h1>
+      <p class="topic-desc">В чем разница между одалживанием денег и совладением бизнесом. Дивиденды и взрывной рост компании.</p>
 
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Рыночная волатильность акций:</span>
-          <span style="color:#f59e0b;">Умеренно-высокая (просадки в кризис до 40–50%)</span>
+      <div class="danger-meter">
+        <div class="danger-meta">
+          <span>Опасномометр (Акции компаний):</span>
+          <span style="color:#ffb703;">Средний (американские горки) 🎢 (3 из 5)</span>
         </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick"></div>
-        </div>
-      </div>
-
-      <h2>Фундаментальные мультипликаторы стоимости</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Метрика</th>
-              <th>Формула расчета</th>
-              <th>Смысл показателя</th>
-              <th>Норма для рынка РФ</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>P/E</strong></td>
-              <td>Капитализация / Чистая прибыль</td>
-              <td>За сколько лет бизнес окупает себя прибылью</td>
-              <td>3.5 – 6.5 лет</td>
-            </tr>
-            <tr>
-              <td><strong>P/B</strong></td>
-              <td>Капитализация / Собственный капитал</td>
-              <td>Отношение цены акций к балансовым активам</td>
-              <td>&lt; 1.0 (бизнес дешевле станков и заводов)</td>
-            </tr>
-            <tr>
-              <td><strong>EV/EBITDA</strong></td>
-              <td>(Капитализация + Чистый долг) / EBITDA</td>
-              <td>Окупаемость с учетом долговой нагрузки</td>
-              <td>2.5 – 4.5x</td>
-            </tr>
-            <tr>
-              <td><strong>Net Debt / EBITDA</strong></td>
-              <td>Чистый долг / EBITDA</td>
-              <td>Коэффициент закредитованности компании</td>
-              <td>&lt; 2.0x (выше 3.0x — высокая опасность)</td>
-            </tr>
-            <tr>
-              <td><strong>ROE</strong></td>
-              <td>Чистая прибыль / Собственный капитал</td>
-              <td>Рентабельность вложенных акционерами денег</td>
-              <td>Выше 20% в год</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="card card-accent">
-        <h3>Кейс расчета Total Return (Курсовой рост + Дивиденды + Реинвестирование)</h3>
-        <p>Инвестор купил 1 000 акций нефтяной компании по цене <strong>500 ₽</strong> (вложено 500 000 ₽). Совет директоров утвердил годовой дивиденд <strong>75 ₽ на акцию</strong>. К концу года акции выросли до <strong>580 ₽</strong>.</p>
-        <div class="math-box">
-          <div class="math-row"><span>Дивидендная доходность к цене покупки:</span><span>75 / 500 = 15.0%</span></div>
-          <div class="math-row"><span>Начислено дивидендов брутто:</span><span>75 000.00 ₽</span></div>
-          <div class="math-row"><span>Удержан налог НДФЛ 13%:</span><span>-9 750.00 ₽</span></div>
-          <div class="math-row"><span>Чистые дивиденды на руки:</span><span>+65 250.00 ₽</span></div>
-          <div class="math-row"><span>Прирост курсовой стоимости (580 - 500) × 1 000:</span><span>+80 000.00 ₽</span></div>
-          <div class="math-row"><span>Итоговый Total Return за год:</span><span>+145 250 ₽ (+29.05% годовых!)</span></div>
+        <div class="danger-track">
+          <div class="danger-pip green"></div>
+          <div class="danger-pip green"></div>
+          <div class="danger-pip yellow"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
         </div>
       </div>
 
-      <h2>Дивидендный гэп и дата закрытия реестра</h2>
-      <p>На Московской Бирже действует режим торгов <strong>Т+1</strong>. Чтобы получить дивиденды, акцию необходимо купить <em>за 1 торговый день до даты закрытия реестра (отсечки)</em>. На следующий день после отсечки бумага открывается падением примерно на размер дивиденда — это и есть <strong>дивидендный гэп</strong>, так как из капитала компании ушли реальные деньги на счета акционеров.</p>
-
-      <!-- Тест к теме 3 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 3 (5 вопросов)</h3>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">1. У металлургической компании показатель Net Debt / EBITDA составляет 4.2x при ключевой ставке 20%. О чем это предупреждает инвестора?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Бизнес абсолютно защищен от кризисов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Дивиденды вырастут в 4 раза</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Компания опасно закредитована: выплата процентов по долгу может сожрать всю чистую прибыль и привести к отмене дивидендов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Акции гарантированно удвоятся</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">2. Что такое дивидендный гэп на открытии торгов?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Штраф брокера за удержание акций</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Падение цены акции утром в экс-дивидендный день примерно на величину выплачиваемого дивиденда</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Комиссия Московской Биржи</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">День отмены торгов акциями</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Чем отличаются обыкновенные акции от привилегированных акций (префов)?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Обыкновенные дают право голоса на собрании акционеров, а по префам в уставе обычно закреплен четкий приоритет и фиксированный процент чистой прибыли на дивиденд</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Префы выпускает только Центробанк</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Обыкновенные акции нельзя продавать 3 года</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Префы дают скидку на покупку бензина</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Что происходит с акциями компании при обратном выкупе (Buyback)?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Компания объявляет о банкротстве</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Количество акций удваивается</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Дивиденды запрещаются на 5 лет</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Компания выкупает свои акции с открытого рынка и гасит их: на оставшиеся в обращении акции приходится большая доля прибыли</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Мультипликатор P/E Сбера равен 3.9, а европейского банка — 11.5. Означает ли это, что Сбер привлекательнее для покупки?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Нет, европейский банк дешевле</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Да, Сбер стоит дешевле по окупаемости чистой прибылью, однако дисконт закладывает геополитические и санкционные риски РФ</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Мультипликатор P/E вообще неприменим к банкам</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Это свидетельствует об убытках компании</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА 4: ПИФ И ПАЙ -->
-    <section class="topic-screen" id="screen-4">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>ПИФ и ПАЙ: Механика коллективных инвестиций</h1>
-      <p class="lead-paragraph">Как устроены фонды: расчет стоимости чистых активов (СЧА), БПИФ vs ОПИФ vs ЗПИФ, роль Специализированного депозитария, скрытые комиссии TER и налоговая льгота ЛДВ.</p>
-
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Диверсификация портфеля ПИФ:</span>
-          <span style="color:#10b981;">Высокая (десятки и сотни компаний внутри одного пая)</span>
-        </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-green"></div>
-          <div class="risk-tick lvl-blue"></div>
-          <div class="risk-tick"></div>
-          <div class="risk-tick"></div>
-        </div>
-      </div>
-
-      <!-- SVG диаграмма фонда СЧА -->
-      <div class="svg-diagram-card">
-        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="220" height="140" rx="12" fill="#172033" stroke="#3b82f6" stroke-width="2"/>
-          <text x="130" y="45" fill="#93c5fd" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Активы фонда (Корзина)</text>
-          <text x="130" y="75" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• 50 акций Индекса Мосбиржи</text>
-          <text x="130" y="95" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• Пакеты ОФЗ и корпоративных бондов</text>
-          <text x="130" y="115" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• Денежный остаток и РЕПО</text>
-          <text x="130" y="145" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">СЧА = 1 000 000 000 ₽</text>
-
-          <path d="M 260 90 L 330 90" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow)"/>
-          <text x="295" y="80" fill="#f59e0b" font-size="11" text-anchor="middle" font-family="sans-serif">Деление на</text>
-          <text x="295" y="110" fill="#f59e0b" font-size="10" text-anchor="middle" font-family="sans-serif">10 млн паев</text>
-
-          <rect x="350" y="35" width="220" height="110" rx="12" fill="#172033" stroke="#10b981" stroke-width="2"/>
-          <text x="460" y="65" fill="#6ee7b7" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">1 БИРЖЕВОЙ ПАЙ</text>
-          <text x="460" y="95" fill="#ffffff" font-size="14" text-anchor="middle" font-family="sans-serif">Расчетная цена = 100.00 ₽</text>
-          <text x="460" y="125" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">Покупка в приложении брокера от 1 шт.</text>
-        </svg>
-        <div class="svg-caption-text">Формирование стоимости одного пая на основе СЧА фонда</div>
-      </div>
-
-      <h2>Виды фондов в РФ</h2>
-      <ul>
-        <li><strong>БПИФ (Биржевой фонд):</strong> Российский аналог зарубежных ETF. Свободно торгуется на бирже в торговые часы через любого брокера. Сделка совершается за секунду по рыночной котировке.</li>
-        <li><strong>ОПИФ (Открытый):</strong> Покупка и погашение осуществляются через офис или личный кабинет конкретной Управляющей Компании (УК) по расчетной стоимости СЧА следующего дня. Часто берут надбавки (при покупке) и скидки (при продаже) до 1–2%.</li>
-        <li><strong>ЗПИФ (Закрытый):</strong> Создаются под неликвидные активы (коммерческая недвижимость, склады, венчурные проекты). Погасить пай нельзя до закрытия фонда, продать можно только на вторичном рынке при наличии покупателя.</li>
-      </ul>
-
-      <div class="card card-usd">
-        <h3>Внимание к скрытым комиссиям (TER — Total Expense Ratio)</h3>
-        <p>Комиссия управляющей компании не приходит отдельной квитанцией — она <strong>ежедневно микродолями вычитается из активов фонда</strong>. Если фонд берет комиссию <strong>3.0% в год</strong>, а рынок вырос на <strong>10%</strong>, инвестор получит лишь <strong>7%</strong>. За 10 лет сложный процент таких комиссий отнимает <strong>до 25–30% всей потенциальной прибыли инвестора</strong>!</p>
-      </div>
-
-      <!-- Тест к теме 4 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 4 (5 вопросов)</h3>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">1. Инвестор располагает суммой в 3 000 рублей, но хочет диверсифицированный портфель из 50 крупнейших акций РФ. Что ему выбрать?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Купить одну акцию Норникеля</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Купить паи БПИФ на Индекс Мосбиржи (например, TMOS или EQMX), где внутри уже сбалансированы топ-50 компаний</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Взять кредит для покупки каждого лота акций по отдельности</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Открыть валютный вклад</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">2. Кто по закону контролирует Управляющую Компанию и хранит активы фонда отдельно от баланса самой УК?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Маркетмейкер биржи</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Полиция региона</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Специализированный депозитарий (Спецдеп), согласующий каждую операцию УК с активами фонда</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Сам инвестор через регулярные звонки</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Какое налоговое преимущество имеют российские БПИФ акций при получении дивидендов от компаний внутри фонда?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Фонд не платит налог на прибыль 13% с дивидендов и реинвестирует 100% полученных средств обратно в покупку акций</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Фонд платит налог по ставке 30%</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Дивиденды изымаются в пользу государства</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фонд распределяет дивиденды только руководству УК</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Как изменяется расчетная стоимость одного пая при росте стоимости акций, входящих в состав фонда?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Цена пая падает</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Цена остается неизменной всегда</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Фонд аннулирует паи</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">СЧА фонда увеличивается, и стоимость пая пропорционально возрастает</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Какое условие необходимо соблюсти для освобождения от НДФЛ прибыли от продажи паев по льготе долгосрочного владения (ЛДВ)?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Удерживать паи не менее 6 месяцев</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Непрерывно владеть паями более 3 полных лет (лимит безналоговой прибыли — до 3 000 000 ₽ за каждый год владения)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Быть индивидуальным предпринимателем</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Покупать паи исключительно в выходные дни</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА 5: ИИС -->
-    <section class="topic-screen" id="screen-5">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>ИИС: Налоговые щиты инвестора (ИИС-3)</h1>
-      <p class="lead-paragraph">Полный разбор государственного режима поддержки частных инвесторов: прогрессивная шкала НДФЛ от 13% до 22% (возврат до 88 000 ₽/год), освобождение прибыли до 30 млн ₽, сроки 5–10 лет, правила вывода на лечение и расчет сложного процента с ОФЗ.</p>
-
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Надежность налоговых гарантий:</span>
-          <span style="color:#10b981;">100% защита государством (Налоговый кодекс РФ)</span>
-        </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-green"></div>
-          <div class="risk-tick lvl-green"></div>
-          <div class="risk-tick"></div>
-          <div class="risk-tick"></div>
-        </div>
-      </div>
-
-      <h2>Таблица вычетов на взнос по прогрессивной шкале НДФЛ</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Годовой доход инвестора</th>
-              <th>Ставка НДФЛ</th>
-              <th>База взноса для вычета</th>
-              <th>Сумма возврата из бюджета</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>До 2.4 млн ₽ в год</td>
-              <td>13%</td>
-              <td>400 000 ₽</td>
-              <td><strong>52 000 ₽</strong></td>
-            </tr>
-            <tr>
-              <td>От 2.4 до 5.0 млн ₽</td>
-              <td>15%</td>
-              <td>400 000 ₽</td>
-              <td><strong>60 000 ₽</strong></td>
-            </tr>
-            <tr>
-              <td>От 5.0 до 20.0 млн ₽</td>
-              <td>18%</td>
-              <td>400 000 ₽</td>
-              <td><strong>72 000 ₽</strong></td>
-            </tr>
-            <tr>
-              <td>От 20.0 до 50.0 млн ₽</td>
-              <td>20%</td>
-              <td>400 000 ₽</td>
-              <td><strong>80 000 ₽</strong></td>
-            </tr>
-            <tr>
-              <td>Свыше 50.0 млн ₽</td>
-              <td>22%</td>
-              <td>400 000 ₽</td>
-              <td><strong>88 000 ₽</strong></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- График темы 5 -->
-      <div class="chart-container">
-        <div class="chart-caption">📈 Накопление капитала на ИИС-3 (Взнос 400 000 ₽/год + ОФЗ 12% + Реинвестирование вычета 13%)</div>
-        <canvas id="chartTopic5" height="230"></canvas>
-      </div>
-
-      <div class="card card-risk">
-        <h3>Ключевые условия и регламенты счетов ИИС-3</h3>
-        <ul>
-          <li><strong>Минимальный срок удержания:</strong> 5 лет для счетов, открытых в 2024–2026 годах (срок постепенно увеличивается до 10 лет к 2031 году).</li>
-          <li><strong>Льгота на финансовый результат:</strong> До <strong>30 000 000 ₽ прибыли</strong> освобождается от налога при закрытии счета после истечения минимального срока.</li>
-          <li><strong>Количество счетов:</strong> Разрешено одновременно иметь <strong>до 3 счетов ИИС-3</strong> у разных брокеров.</li>
-          <li><strong>Досрочный вывод:</strong> Вывод средств закрывает счет с аннулированием льгот и возвратом вычетов с уплатой пеней (1/300 ставки ЦБ в день). <em>Единственное исключение: оплата дорогостоящего лечения по перечню Правительства РФ без закрытия счета.</em></li>
-          <li><strong>Ограничения:</strong> Запрещено покупать ценные бумаги иностранных эмитентов.</li>
-        </ul>
-      </div>
-
-      <!-- Тест к теме 5 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 5 (5 вопросов)</h3>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">1. Какую максимальную сумму прибыли от биржевой торговли можно полностью освободить от НДФЛ при закрытии ИИС-3 после истечения минимального срока?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">1 000 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">10 000 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 30 000 000 ₽ чистой прибыли</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ограничений нет вообще</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">2. Сколько одновременно действующих счетов ИИС-3 разрешено иметь одному гражданину РФ?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Строго один</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">До трех счетов одновременно у одного или разных брокеров</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 10 счетов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Только при наличии статуса квалифицированного инвестора</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Инвестор платит НДФЛ по ставке 15% (доход от 2.4 до 5 млн ₽ в год). Сколько рублей вернет налоговая со взноса 400 000 ₽ на ИИС-3?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">60 000 ₽ (400 000 × 15%)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">52 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">88 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">400 000 ₽</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. В каком исключительном случае разрешено снять деньги с ИИС-3 досрочно без потери налоговых льгот и без закрытия счета?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Покупка первой квартиры в ипотеку</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Покупка отечественного автомобиля</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Оплата свадебного торжества</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Оплата дорогостоящих медицинских услуг из правительственного перечня</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Каков лимит максимального пополнения счета ИИС-3 в календарный год?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Строго до 1 000 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Ограничений по сумме пополнения нет (вносить можно любые суммы, но база для вычета на взнос — макс. 400 000 ₽)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 500 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Не более 3 окладов</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА 6: ФЬЮЧЕРСЫ -->
-    <section class="topic-screen" id="screen-6">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Фьючерсы: Срочный рынок и кредитное плечо</h1>
-      <p class="lead-paragraph">Механика торговли деривативами: спецификации контрактов, гарантийное обеспечение (ГО), встроенное кредитное плечо, клиринговые сессии, вариационная маржа, контанго, бэквордация и Margin Call.</p>
-
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Уровень риска срочного рынка:</span>
-          <span style="color:#ef4444;">Экстремальный (риск мгновенной потери ГО при плече)</span>
-        </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-        </div>
-      </div>
-
-      <!-- SVG диаграмма плеча фьючерса -->
-      <div class="svg-diagram-card">
-        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="30" width="540" height="40" rx="8" fill="#172033" stroke="#2b384e" stroke-width="2"/>
-          <rect x="30" y="30" width="80" height="40" rx="8" fill="#ef4444"/>
-          <text x="70" y="55" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">ГО: 15%</text>
-          <text x="330" y="55" fill="#94a3b8" font-size="12" text-anchor="middle" font-family="sans-serif">Бесплатное встроенное плечо биржи: 85% объема контракта</text>
-
-          <text x="300" y="105" fill="#f87171" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Двусторонний эффект кредитного рычага:</text>
-          <text x="300" y="128" fill="#cbd5e1" font-size="12" text-anchor="middle" font-family="sans-serif">Рост базового актива на +5% приносит +33% чистой прибыли на депозит ГО.</text>
-          <text x="300" y="148" fill="#ef4444" font-size="12" text-anchor="middle" font-family="sans-serif">Но падение актива на -15% полностью уничтожает внесенное обеспечение!</text>
-        </svg>
-        <div class="svg-caption-text">Структура гарантийного обеспечения (ГО) и кредитного плеча во фьючерсном контракте</div>
-      </div>
-
-      <h2>Клиринг и вариационная маржа</h2>
-      <p>На срочном рынке Московской Биржи перерасчет позиций происходит <strong>дважды в день</strong>:</p>
-      <ul>
-        <li><strong>Промежуточный (дневной) клиринг:</strong> 14:00 – 14:05.</li>
-        <li><strong>Основной (вечерний) клиринг:</strong> 18:50 – 19:05.</li>
-      </ul>
-      <p>В эти окна биржа рассчитывает финансовый результат: если рынок шел в вашу сторону — вариационная маржа начисляется рублями на баланс. Если цена пошла против позиции — деньги списываются. Если остаток на счете опускается ниже величины минимального ГО, наступает <strong>Margin Call</strong>: брокер требует довнести деньги или принудительно закрывает сделку по рыночной цене.</p>
-
-      <div class="card card-risk">
-        <h3>Пример расчета сделки с фьючерсом на нефть Brent</h3>
-        <p>Полная стоимость контракта на нефть — <strong>100 000 ₽</strong>. Требуемое биржевое ГО — <strong>15 000 ₽</strong> (плечо ~6.6x). Трейдер покупает 1 контракт Long.</p>
-        <div class="math-box">
-          <div class="math-row"><span>Внесено ГО на счет:</span><span>15 000.00 ₽</span></div>
-          <div class="math-row"><span>Нефть выросла всего на +3%:</span><span>+3 000.00 ₽ к стоимости контракта</span></div>
-          <div class="math-row"><span>Начислено маржи в клиринг:</span><span>+3 000.00 ₽</span></div>
-          <div class="math-row"><span>Доходность на вложенный депозит ГО:</span><span style="color:#10b981;">+20% за пару торговых часов!</span></div>
-          <div class="math-row"><span>⚠️ При падении цены нефти на 15%:</span><span style="color:#ef4444;">Убыток -15 000 ₽ (ликвидация депозита)</span></div>
-        </div>
-      </div>
-
-      <!-- Тест к теме 6 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 6 (5 вопросов)</h3>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">1. Что произойдет в день экспирации расчетного фьючерса на индекс Мосбиржи?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Инвестору привезут акции всех 50 компаний на дом</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Биржа проведет окончательные денежные взаиморасчеты (вариационную маржу), и контракт автоматически закроется</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Брокер начислит штраф 10 000 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Контракт бессрочно перенесется на следующий год</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">2. За чей счет трейдер получает кредитное плечо при торговле фьючерсами?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Брокер выдает кредит под 30% годовых</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">За счет госбюджета</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Плечо бесплатно заложено в механизм гарантийного обеспечения (ГО): биржа блокирует только залоговую часть стоимости актива</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">За счет налогового вычета</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Когда на Московской Бирже начисляется и списывается вариационная маржа по фьючерсам?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Дважды в день в клиринговые окна (14:00 и 18:50)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Один раз в конце года</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Только в дату экспирации контракта</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">В момент звонка брокера</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Что означает состояние рынка «Контанго» (Contango)?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Запрет коротких продаж (шортов)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Фьючерс торгуется дешевле базового актива</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Резкий крах фондового рынка</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фьючерсный контракт торгуется дороже текущей спотовой цены базового актива</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. С какой целью институциональные инвесторы используют продажу фьючерсов на индекс?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Ради получения дивидендов</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Для хеджирования: шорт фьючерса компенсирует просадку физического портфеля акций во время рыночного обвала</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Для снижения комиссии за депозитарий</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Для отмены налогообложения</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА 7: ОПЦИОНЫ -->
-    <section class="topic-screen" id="screen-7">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Опционы: Асимметрия риска и стратегии</h1>
-      <p class="lead-paragraph">Нелинейные контракты Call и Put, права покупателя и обязанности продавца, страйк, премия, статусы ITM/ATM/OTM, временной распад Тета (Theta) и стратегия Стрэддл.</p>
-
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Сложность понимания математики опционов:</span>
-          <span style="color:#ef4444;">Продвинутый уровень (греки, волатильность)</span>
-        </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-          <div class="risk-tick lvl-red"></div>
-        </div>
-      </div>
-
-      <h2>Матрица базовых позиций в опционах</h2>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Позиция</th>
-              <th>Ожидание рынка</th>
-              <th>Максимальный доход</th>
-              <th>Максимальный риск</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Покупка Call (Long Call)</strong></td>
-              <td>Взрывной рост</td>
-              <td>Не ограничен</td>
-              <td>Строго уплаченная премия</td>
-            </tr>
-            <tr>
-              <td><strong>Покупка Put (Long Put)</strong></td>
-              <td>Глубокий обвал</td>
-              <td>До цены страйка (~100%)</td>
-              <td>Строго уплаченная премия</td>
-            </tr>
-            <tr>
-              <td><strong>Продажа Call (Short Call)</strong></td>
-              <td>Падение или боковик</td>
-              <td>Только полученная премия</td>
-              <td>Не ограничен (опаснейшая позиция!)</td>
-            </tr>
-            <tr>
-              <td><strong>Продажа Put (Short Put)</strong></td>
-              <td>Рост или боковик</td>
-              <td>Только полученная премия</td>
-              <td>Риск выкупа рухнувшего актива</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- График темы 7 -->
-      <div class="chart-container">
-        <div class="chart-caption">📊 Профили P&L (Прибыль / Убыток) Покупателя Call и Покупателя Put (Страйк = 100 ₽, Премия = 5 ₽)</div>
-        <canvas id="chartTopic7" height="230"></canvas>
-      </div>
-
-      <div class="card card-accent">
-        <h3>Временной распад: Тета (Theta)</h3>
-        <p>Опцион — это «тающий лед». У него есть строгая дата экспирации. Каждый прошедший день уменьшает временную стоимость контракта. Даже если цена базового актива стоит на месте, купленный опцион <strong>дешевеет каждый день в пользу его продавца</strong>. Покупателю нужно не просто угадать направление движения, но и уложиться в отведенное время.</p>
-      </div>
-
-      <!-- Тест к теме 7 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 7 (5 вопросов)</h3>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">1. Инвестор купил опцион Put со страйком 200 ₽ за премию 15 ₽. При какой цене акции на дату экспирации сделка выйдет в безубыток?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">215.00 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">185.00 ₽ (Страйк 200 - Премия 15)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">200.00 ₽</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">15.00 ₽</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">2. В чем главное преимущество ПОКУПАТЕЛЯ опциона перед держателем фьючерса?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">По опциону начисляются купоны</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Опцион не имеет срока экспирации</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">У покупателя опциона нет риска Margin Call: максимальный убыток заранее ограничен размером уплаченной премии</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Опционы освобождены от налогов</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Что означает статус «В деньгах» (In the Money — ITM) для опциона Call?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Текущая рыночная цена актива строго выше страйка опциона</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Цена упала до нуля</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Премия опциона стала отрицательной</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Биржа отменила контракт</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Почему продажа «голых» опционов Call без покрытия считается самой рискованной стратегией на бирже?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">По ним нужно платить дивиденды</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">За них берут тройную комиссию</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Они торгуются только ночью</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Потенциальный убыток продавца Call теоретически не ограничен, так как цена актива вверх может вырасти бесконечно</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Какая конструкция называется опционным «Стрэддлом» (Straddle)?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Одновременная продажа акций и покупка ОФЗ</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Одновременная покупка Call и Put с одинаковым страйком и экспирацией (ставка на сильнейшее движение рынка в любую сторону)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Отказ от исполнения опциона</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Покупка 100 фьючерсов на нефть</button>
-          </div>
-          <div class="feedback-panel"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- СТРАНИЦА 8: СТРУКТУРНЫЕ НОТЫ -->
-    <section class="topic-screen" id="screen-8">
-      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
-      <h1>Структурные ноты: Архитектура и скрытые риски</h1>
-      <p class="lead-paragraph">Конструкция продуктов со 100% защитой капитала, коэффициент участия, кредитный риск банка-эмитента, ноты с барьером автоколла (Autocall) «Worst-Of» и скрытая маржа инвестбанков.</p>
-
-      <div class="risk-panel">
-        <div class="risk-header">
-          <span>Уровень структурных и барьерных рисков:</span>
-          <span style="color:#f59e0b;">Высокий (барьеры «Worst-Of»)</span>
-        </div>
-        <div class="risk-scale">
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick lvl-yellow"></div>
-          <div class="risk-tick"></div>
-        </div>
-      </div>
-
-      <!-- SVG диаграмма структуры ноты -->
-      <div class="svg-diagram-card">
-        <svg viewBox="0 0 600 170" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="560" height="70" rx="10" fill="#172033" stroke="#3b82f6" stroke-width="2"/>
-          <rect x="30" y="30" width="450" height="50" rx="8" fill="#1e3a8a"/>
-          <text x="255" y="60" fill="#bfdbfe" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Защитная часть: 85% капитала в ОФЗ / Депозит под процент</text>
+      <!-- Иллюстрация: Пицца делится на кусочки-акции -->
+      <div class="visual-box">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Пицца -->
+          <circle cx="160" cy="100" r="75" fill="#f4a261" stroke="#e76f51" stroke-width="6"/>
+          <!-- Кусочки -->
+          <path d="M 160 100 L 160 25 A 75 75 0 0 1 235 100 Z" fill="#e71d36"/>
+          <text x="195" y="70" fill="#fff" font-size="12" font-weight="bold">ТВОЙ КУСОК</text>
           
-          <rect x="490" y="30" width="80" height="50" rx="8" fill="#f59e0b"/>
-          <text x="530" y="60" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">Опцион 15%</text>
+          <line x1="160" y1="100" x2="85" y2="100" stroke="#e76f51" stroke-width="3"/>
+          <line x1="160" y1="100" x2="160" y2="175" stroke="#e76f51" stroke-width="3"/>
+          <line x1="160" y1="100" x2="215" y2="150" stroke="#e76f51" stroke-width="3"/>
 
-          <text x="300" y="125" fill="#ffffff" font-size="13" text-anchor="middle" font-family="sans-serif">К концу срока 850 000 ₽ гарантированно вырастают обратно в 1 000 000 ₽.</text>
-          <text x="300" y="148" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">А 150 000 ₽ дают неограниченную доходность, если рынок акций вырос.</text>
+          <!-- Выносной блок -->
+          <rect x="290" y="30" width="280" height="140" rx="12" fill="#1e2c47" stroke="#2ec4b6" stroke-width="2"/>
+          <text x="430" y="60" fill="#2ec4b6" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">🍕 БИЗНЕС ПОДЕЛЕН НА 100 ЧАСТЕЙ</text>
+          <text x="310" y="90" fill="#fff" font-size="12" font-family="sans-serif">• 1 кусочек = 1 Акция компании</text>
+          <text x="310" y="115" fill="#fff" font-size="12" font-family="sans-serif">• Пиццерия испекла 10 000 пицц прибыли</text>
+          <text x="310" y="140" fill="#ffb703" font-size="13" font-weight="bold" font-family="sans-serif">Твоя доля прибыли (ДИВИДЕНД) = 1%</text>
         </svg>
-        <div class="svg-caption-text">Конструкция классической структурной ноты со 100% защитой капитала</div>
+        <div class="visual-caption">Покупая акцию, ты покупаешь кусочек настоящего живого завода или магазина</div>
       </div>
 
-      <h2>Подводные камни нот с барьером «Worst-Of» (По худшей акции)</h2>
-      <div class="card card-risk">
-        <p>Банки активно продают ноты с купоном <strong>до 25–30% годовых</strong>. В корзину помещаются 4 акции (например, Сбер, Лукойл, Яндекс, Ozon). Защитный барьер купона — <strong>70%</strong> от стартовой цены.</p>
-        <div class="math-box">
-          <div class="math-row"><span>Сбербанк:</span><span style="color:#10b981;">+25% (Выше старта)</span></div>
-          <div class="math-row"><span>Лукойл:</span><span style="color:#10b981;">+15% (Выше старта)</span></div>
-          <div class="math-row"><span>Яндекс:</span><span style="color:#10b981;">+5% (Выше старта)</span></div>
-          <div class="math-row"><span>Ozon (пробил барьер):</span><span style="color:#ef4444;">-35% (Упал ниже 70% от старта)</span></div>
-          <div class="math-row"><span>ИТОГ ДЛЯ ИНВЕСТОРА:</span><span style="color:#ef4444;">Защита полностью ликвидирована!</span></div>
-          <div class="math-row"><span>Результат на экспирации:</span><span>Инвестор получает не деньги, а подешевевшие акции Ozon с убытком -35%</span></div>
+      <h2>Кусочек пиццерии «У Дяди Вани»</h2>
+      <p>Смотри: когда ты покупал <strong>облигацию</strong>, ты был просто кредитором. Тебе было всё равно, какую пиццу печёт дядя Ваня, главное — чтобы он вернул твою тысячу и купоны вовремя.</p>
+      <p>Но с <strong>акциями</strong> всё совсем по-другому! Представь, что дядя Ваня говорит:</p>
+      <p><em>— «Я хочу построить целую сеть пиццерий по всей стране! Мне нужны партнёры. Давай ты дашь мне 10 000 рублей, а взамен станешь настоящим совладельцем 10% моей компании!»</em></p>
+      <p>Теперь ты не просто мальчик с улицы, ты — <strong>БОСС и АКЦИОНЕР</strong>!</p>
+
+      <h2>Как зарабатывают на акциях?</h2>
+      <div class="fun-card safe">
+        <h3>1. Дивиденды — твоя доля в добыче</h3>
+        <p>За месяц пиццерия продала гору сырной пиццы, заплатила за муку, раздала зарплату поварам, и у неё остался чистый миллион рублей прибыли. Дядя Ваня собирает всех акционеров и говорит: <em>«Мы отлично поработали! Половину прибыли делим между собой!»</em> Тебе на карточку падает твоя законная часть — это и есть <strong>дивиденды</strong>.</p>
+      </div>
+
+      <div class="fun-card highlight">
+        <h3>2. Рост стоимости акций (Когда бизнес взлетает)</h3>
+        <p>Раньше у дяди Вани была одна маленькая палатка, а через три года стало 50 ресторанов в разных городах! Теперь вся его компания стоит не 100 тысяч, а 100 миллионов рублей. Твой кусочек, который ты когда-то купил за 10 000 рублей, теперь стоит <strong>1 000 000 рублей</strong>! Если ты захочешь продать свою акцию на бирже, ты станешь богачом.</p>
+      </div>
+
+      <div class="fun-card danger">
+        <h3>⚠️ Но почему акции называют «американскими горками»?</h3>
+        <p>Потому что бизнес может ошибиться. Вдруг пицца подгорит, люди перестанут приходить, или появится сильный конкурент? Тогда компания получит убыток, дивиденды отменят, а цена твоей акции временно упадет на 30% или 50%. Поэтому акции — это игра вдолгую: их покупают не на два дня, а на годы!</p>
+      </div>
+
+      <!-- ТЕСТ ГЛАВА 3 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Проверь себя: Тест знатока акций (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">1. Что ты получаешь, когда покупаешь 1 акцию Сбербанка или Яндекса?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Право бесплатно забрать компьютер из офиса компании</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Маленькую частичку собственности в этой компании и право на долю её прибыли</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Бесплатный интернет на всю жизнь</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">2. Что такое «дивиденды»?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Часть чистой прибыли компании, которую руководство выплачивает акционерам</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Штраф за плохую учебу</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Налог, который инвестор платит директору завода</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">3. Чем акция принципиально отличается от облигации?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Облигации бывают только круглые, а акции квадратные</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Ничем, это одно и то же слово</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">По облигации тебе обязаны вернуть долг и фиксированный процент, а по акции никто ничего не гарантирует, но прибыль может быть в разы выше</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">4. Почему цена акции на бирже скачет каждый день вверх и вниз?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Биржевой робот кидает игральные кости</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Люди постоянно покупают и продают их: если новость хорошая — все хотят купить (цена растет), если плохая — продают (цена падает)</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Цену меняет охранник биржи по настроению</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">5. Что разумнее всего делать юному инвестору, когда весь рынок акций упал из-за паники?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Не паниковать и не продавать в убыток: отличные компании со временем оправятся и вырастут еще сильнее</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Срочно продать всё за копейки и плакать</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Удалить приложение брокера и выкинуть телефон</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГЛАВА 4: ПИФ И ПАЙ -->
+    <section class="page-screen" id="chapter-4">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 4. ПИФ и Пай: Огромная корзина сладостей</h1>
+      <p class="topic-desc">Как купить кусочки сразу 50 лучших компаний страны, имея в кармане всего 100 рублей. Секрет складчины.</p>
+
+      <div class="danger-meter">
+        <div class="danger-meta">
+          <span>Опасномометр (Фонды широкого рынка):</span>
+          <span style="color:#2ec4b6;">Умеренный и сбалансированный 🧺 (2 из 5)</span>
+        </div>
+        <div class="danger-track">
+          <div class="danger-pip green"></div>
+          <div class="danger-pip green"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
+          <div class="danger-pip"></div>
         </div>
       </div>
 
-      <!-- Тест к теме 8 -->
-      <div class="quiz-card-group">
-        <div class="quiz-group-title">
-          <h3>Проверочный тест: Тема 8 (5 вопросов)</h3>
+      <!-- Иллюстрация: Корзина сладостей -->
+      <div class="visual-box">
+        <svg viewBox="0 0 600 210" xmlns="http://www.w3.org/2000/svg">
+          <!-- Корзина -->
+          <ellipse cx="300" cy="140" rx="200" ry="60" fill="#1e2c47" stroke="#ffb703" stroke-width="4"/>
+          <!-- Сладости внутри -->
+          <circle cx="200" cy="120" r="22" fill="#e71d36"/>
+          <text x="200" y="126" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Лукойл</text>
+
+          <circle cx="260" cy="100" r="25" fill="#2ec4b6"/>
+          <text x="260" y="106" fill="#0d1322" font-size="11" font-weight="bold" text-anchor="middle">Сбер</text>
+
+          <circle cx="330" cy="105" r="24" fill="#fb8500"/>
+          <text x="330" y="111" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Яндекс</text>
+
+          <circle cx="390" cy="125" r="22" fill="#00b4d8"/>
+          <text x="390" y="131" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">ОФЗ</text>
+
+          <text x="300" y="45" fill="#ffb703" font-size="16" font-weight="bold" text-anchor="middle" font-family="sans-serif">🧺 ПИФ (ОБЩИЙ МЕШОК СБЕРЕЖЕНИЙ)</text>
+          <text x="300" y="70" fill="#94a3b8" font-size="12" text-anchor="middle" font-family="sans-serif">Тысячи ребят скинулись по 100 рублей и купили всё самое лучшее!</text>
+
+          <!-- Вырезанный билетик-пай -->
+          <rect x="230" y="165" width="140" height="36" rx="8" fill="#ffb703"/>
+          <text x="300" y="188" fill="#0d1322" font-size="13" font-weight="900" text-anchor="middle" font-family="sans-serif">ТВОЙ 1 ПАЙ 🎫</text>
+        </svg>
+        <div class="visual-caption">Один пай дает тебе крошечную долю в огромной корзине из десятков гигантских компаний</div>
+      </div>
+
+      <h2>Проблема в супермаркете сладостей</h2>
+      <p>Представь: ты пришел в гигантский магазин сладостей. На полках лежат 50 самых вкусных в мире тортов, шоколадок и конфет. Но каждая большая коробка стоит <strong>5 000 рублей</strong>! А у тебя в кармане всего <strong>500 рублей</strong>. Купить даже один целый торт ты не можешь.</p>
+      <p>Что делать? Собрать друзей и устроить <strong>СКЛАДЧИНУ</strong>!</p>
+      <p>Вы собираете деньги со всего двора — получается целый миллион рублей! На этот миллион вы покупаете сразу ВСЕ 50 сладостей в магазине. А потом аккуратно делите всё поровну на 10 000 маленьких подарочных пакетиков. В каждом пакетике есть кусочек каждого торта и конфеты!</p>
+      <p>В мире инвестиций этот волшебный мешок со сладостями называется <strong>ПИФ (Паевой Инвестиционный Фонд)</strong>. А один твой маленький пакетик — это <strong>ПАЙ</strong>.</p>
+
+      <h2>Почему ПИФ — идеальный выбор для новичка?</h2>
+      <ul>
+        <li><strong>Супер-защита (Диверсификация):</strong> Представь, что в одном из 50 тортов испортился крем, и его пришлось выкинуть. Расстроишься ли ты? Нет, ведь у тебя осталось еще 49 вкуснейших тортов! Если одна компания из фонда обанкротится, ты даже не заметишь этого, потому что остальные 49 компаний выросли и перекрыли минус.</li>
+        <li><strong>Профессиональный капитан:</strong> Деньгами фонда управляет не школьник, а опытный дядя-финансист из <strong>Управляющей Компании (УК)</strong>. Он с утра до вечера следит за новостями рынка и выбирает самое надежное.</li>
+        <li><strong>Доступность:</strong> Купить 1 биржевой пай (БПИФ) в приложении брокера можно буквально за <strong>10 или 100 рублей</strong> — это дешевле пачки чипсов!</li>
+      </ul>
+
+      <!-- ТЕСТ ГЛАВА 4 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Проверь себя: Тест знатока ПИФов и паев (5 вопросов)</h3>
         </div>
 
-        <div class="quiz-block" data-correct-idx="2">
-          <div class="quiz-q-text">1. Если структурная нота имеет «100% защиту капитала», какой существенный риск все равно несет инвестор?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Рисков нет вообще</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Риск падения цен на нефть</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Кредитный риск банкротства банка-эмитента ноты + инфляционный риск (деньги вернутся без процентов)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Риск блокировки со стороны ООН</button>
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">1. Что такое «ПИФ» простыми словами?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Праздничный торт с вишней</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Большой общий инвестиционный фонд-мешок, куда люди скидываются деньгами, чтобы купить корзину акций и облигаций</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Секретный код для игры в приставку</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">2. Что такое «Автоколл» (Autocall) в структурном продукте?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Звонок менеджера с предложением пополнить баланс</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Условие досрочного закрытия ноты с выплатой номинала и купона, если в дату наблюдения все базовые активы оказались выше стартовой цены</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Штраф за досрочный вывод средств</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Перевод ноты в валюту</button>
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">2. А что тогда такое «Пай»?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Твой именной электронный билет, доказывающий, что тебе принадлежит доля в этом общем мешке</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Долг перед банком</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Зарплата директора фонда</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="0">
-          <div class="quiz-q-text">3. Почему грамотный инвестор может собрать структурную ноту самостоятельно выгоднее, чем купить ее в банке?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Инвестор сам покупает ОФЗ на 85% капитала и опционы Call на 15%, экономя от 3% до 6% скрытой маржи банка</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Физлицам запрещено покупать ОФЗ в банках</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Банк не умеет рассчитывать проценты</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Государство субсидирует самостоятельные сделки</button>
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">3. Какое главное преимущество покупки фонда перед покупкой одной единственной акции?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Фонд гарантирует 1000% прибыли за ночь</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">За фонд не нужно платить</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Надежность: если одна компания в фонде упадет, десятки других подстрахуют твой капитал</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="3">
-          <div class="quiz-q-text">4. Что происходит с ликвидностью структурной ноты, если инвестору срочно потребовались деньги в середине срока?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Ее можно сдать в кассу банка без потерь в любой день</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Она продается по номиналу за 1 секунду</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Биржа обменяет ее на слиток золота</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Вторичный рынок нот крайне неликвиден: эмитент выкупает бумагу с огромным штрафным дисконтом (потеря 15–30% капитала)</button>
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">4. Кто управляет деньгами в фонде и решает, что покупать?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Искусственный интеллект из космоса</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Профессиональные финансисты из Управляющей Компании (УК)</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Случайные прохожие на улице</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
         </div>
 
-        <div class="quiz-block" data-correct-idx="1">
-          <div class="quiz-q-text">5. Для какой категории инвесторов в РФ доступно большинство сложных структурных продуктов с барьерами?</div>
-          <div class="quiz-options-list">
-            <button class="btn-option" onclick="handleQuizClick(this, 0)">Для всех без исключения</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 1)">Только для квалифицированных инвесторов (или после успешной сдачи тестирования ЦБ РФ)</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 2)">Только для госслужащих</button>
-            <button class="btn-option" onclick="handleQuizClick(this, 3)">Только для юридических лиц с капиталом от 1 млрд ₽</button>
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">5. За чей счет работает управляющая компания фонда?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Она берет небольшую комиссию (около 1% в год), которая незаметно вычитается из стоимости пая</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Ей платит государство из налогов</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Они работают совершенно бесплатно за спасибо</button>
           </div>
-          <div class="feedback-panel"></div>
+          <div class="explanation-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГЛАВА 5: ОПЦИОНЫ -->
+    <section class="page-screen" id="chapter-5">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 5. Опционы: Билет на бронь игровой приставки</h1>
+      <p class="topic-desc">Самый хитрый инструмент взрослых: как заплатить всего 100 рублей за право купить вещь мечты по старой цене.</p>
+
+      <div class="danger-meter">
+        <div class="danger-meta">
+          <span>Опасномометр (Опционы для профи):</span>
+          <span style="color:#e71d36;">Очень высокий! Опасная магия ⚡ (5 из 5)</span>
+        </div>
+        <div class="danger-track">
+          <div class="danger-pip red"></div>
+          <div class="danger-pip red"></div>
+          <div class="danger-pip red"></div>
+          <div class="danger-pip red"></div>
+          <div class="danger-pip red"></div>
+        </div>
+      </div>
+
+      <!-- Иллюстрация: Бронь приставки -->
+      <div class="visual-box">
+        <svg viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Продавец -->
+          <rect x="50" y="40" width="140" height="120" rx="12" fill="#1e2c47" stroke="#3a4d75" stroke-width="2"/>
+          <text x="120" y="75" fill="#fff" font-size="28" text-anchor="middle">🏪</text>
+          <text x="120" y="105" fill="#fff" font-size="12" font-weight="bold" text-anchor="middle">Магазин игр</text>
+          <text x="120" y="130" fill="#94a3b8" font-size="11" text-anchor="middle">Приставка: 10 000 ₽</text>
+
+          <!-- Талон брони -->
+          <rect x="230" y="50" width="140" height="100" rx="12" fill="#ffb703" stroke="#fb8500" stroke-width="3"/>
+          <text x="300" y="80" fill="#0d1322" font-size="14" font-weight="900" text-anchor="middle">ТАЛОН БРОНИ 🎫</text>
+          <text x="300" y="105" fill="#0d1322" font-size="11" font-weight="bold" text-anchor="middle">Премия = 500 ₽</text>
+          <text x="300" y="130" fill="#0d1322" font-size="10" text-anchor="middle">«Куплю за 10 000 ₽ через месяц»</text>
+
+          <!-- Стрелка в будущее -->
+          <path d="M 390 100 L 450 100" stroke="#2ec4b6" stroke-width="4"/>
+
+          <!-- Итог -->
+          <rect x="460" y="40" width="120" height="120" rx="12" fill="#1e2c47" stroke="#2ec4b6" stroke-width="2"/>
+          <text x="520" y="75" fill="#2ec4b6" font-size="24" text-anchor="middle">🚀 +10 000 ₽</text>
+          <text x="520" y="105" fill="#fff" font-size="11" font-weight="bold" text-anchor="middle">Цена взлетела</text>
+          <text x="520" y="125" fill="#fff" font-size="11" text-anchor="middle">до 20 000 ₽!</text>
+          <text x="520" y="145" fill="#2ec4b6" font-size="11" font-weight="bold" text-anchor="middle">А ты берешь за 10к</text>
+        </svg>
+        <div class="visual-caption">Опцион дает тебе суперсилу: купить по старой низкой цене, даже если все вокруг подорожало</div>
+      </div>
+
+      <h2>История про игровую консоль нового поколения</h2>
+      <p>Представь: выходит новенькая PlayStation. Сейчас в магазине она стоит <strong>10 000 рублей</strong>. Но у тебя сейчас нет 10 тысяч — тебе подарят их на день рождения ровно через месяц.</p>
+      <p>Ты боишься: <em>«А вдруг через месяц приставки раскупят, и спекулянты будут продавать их по 20 000 рублей?»</em></p>
+      <p>Ты подходишь к продавцу и предлагаешь сделку:</p>
+      <p><em>— «Дяденька, вот вам <strong>500 рублей</strong> прямо сейчас в карман. Это не за приставку, это просто плата за обещание (в финансах это называется <strong>ПРЕМИЯ</strong>). Пообещайте, что через месяц вы продадите мне эту приставку строго за 10 000 рублей (это цена <strong>СТРАЙК</strong>), даже если на улице начнется ажиотаж!»</em></p>
+      <p>Продавец берет 500 рублей и дает тебе волшебную бумажку — <strong>Опцион CALL (Колл)</strong>.</p>
+
+      <h2>Что произойдет через месяц? Два сценария:</h2>
+      <div class="fun-card safe">
+        <h3>Сценарий 1: Приставки стали супер-хитом! (Ты победил)</h3>
+        <p>На рынке дефицит, цена приставки взлетела до <strong>20 000 рублей</strong>! Ты гордо приходишь в магазин с талоном и забираешь её за <strong>10 000 рублей</strong>. Твоя чистая выгода: 20 000 − 10 000 − 500 (премия) = <strong>+9 500 рублей прибыли</strong>! Ты рискнул всего пятью сотнями, а заработал почти десятку!</p>
+      </div>
+
+      <div class="fun-card danger">
+        <h3>Сценарий 2: Приставка оказалась с браком и никому не нужна</h3>
+        <p>Через месяц цена приставки упала до <strong>6 000 рублей</strong>. Обязан ли ты покупать её по своему талону за 10 000? <strong>НЕТ! В этом главная магия опциона:</strong> у тебя есть ПРАВО, но нет ОБЯЗАННОСТИ! Ты просто выбрасываешь талон в урну и покупаешь приставку с полки за 6 000. Ты потерял только 500 рублей премии, но спас себя от огромного убытка.</p>
+      </div>
+
+      <h2>Какие бывают опционы?</h2>
+      <ul>
+        <li><strong>Опцион CALL (Колл):</strong> Право КУПИТЬ актив по фиксированной цене. Ты покупаешь его, когда веришь, что цена полетит на Луну.</li>
+        <li><strong>Опцион PUT (Пут):</strong> Право ПРОДАТЬ актив по фиксированной цене. Это страховка! Например, фермер покупает Put, чтобы гарантированно продать урожай пшеницы по хорошей цене, даже если начнется кризис и все подешевеет.</li>
+      </ul>
+
+      <!-- ТЕСТ ГЛАВА 5 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Проверь себя: Тест знатока опционов (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">1. Чем опцион принципиально отличается от обычной покупки вещи в магазине?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Опцион можно съесть на обед</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Опцион дает тебе право, но НЕ обязанность совершить сделку в будущем по заранее оговоренной цене</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Опцион выдают только бесплатно</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">2. Что такое «Премия опциона»?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Невозвратная плата продавцу за саму бронь и право совершить сделку</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Грамота за отличные оценки</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Бесплатный подарок от брокера</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">3. Какой максимальный убыток может получить ПОКУПАТЕЛЬ опциона Call, если рынок пошел не в его сторону?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Он потеряет всю квартиру и все игрушки</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Миллион рублей</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Только размер уплаченной премии (тех самых 500 рублей за бронь) — ни копейкой больше!</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">4. Какой опцион нужно купить, если ты ждешь, что акции сильно УПАДУТ, и хочешь на этом заработать или защитить свой портфель?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Опцион PUT (Пут) — право продать по высокой цене</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Опцион CALL (Колл)</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Банковский вклад</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">5. Почему детям и новичкам категорически запрещено ПРОДАВАТЬ опционы без опыта?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Потому что за это ругают в школе</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Потому что продавец опциона берет на себя ОБЯЗАННОСТЬ, и его потенциальный убыток теоретически ничем не ограничен!</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Потому что опционы продают только по паспорту дедушки</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ГЛАВА 6: БОЛЬШОЕ СРАВНЕНИЕ -->
+    <section class="page-screen" id="chapter-6">
+      <div class="read-time-tag">⏱️ Время чтения: ~5 минут</div>
+      <h1>Глава 6. Финальная битва инструментов: Куда деть 10 000 рублей?</h1>
+      <p class="topic-desc">Большая наглядная шпаргалка инвестора: взвешиваем риски, сравниваем в рублях и долларах и выбираем путь супергероя.</p>
+
+      <!-- Интерактивный график битвы активов -->
+      <div class="chart-box">
+        <h4>📊 Во что превратятся 10 000 рублей за 10 лет в разных местах?</h4>
+        <canvas id="kidsBattleChart" height="230"></canvas>
+      </div>
+
+      <h2>Сводная карта сокровищ</h2>
+      <div class="fun-card safe">
+        <h3>🧸 1. Банковский вклад и ОФЗ (Для спокойного сна)</h3>
+        <p><strong>Суперсила:</strong> Гарантия и стабильность. Ты точно знаешь день и копейку, когда получишь деньги. Идеально для накопления на телефон или велосипед за 6–12 месяцев.</p>
+        <p><strong>Слабость:</strong> Они лишь догоняют инфляцию, но не сделают тебя сказочно богатым.</p>
+      </div>
+
+      <div class="fun-card highlight">
+        <h3>🚀 2. Акции и ПИФы (Для создания богатства)</h3>
+        <p><strong>Суперсила:</strong> Настоящий мотор финансовой свободы. Ты владеешь бизнесами, получаешь дивиденды, и твои деньги обгоняют инфляцию на десятки процентов.</p>
+        <p><strong>Слабость:</strong> Нужны крепкие нервы! На пути будут просадки, бури и кризисы, которые нужно переждать.</p>
+      </div>
+
+      <div class="fun-card danger">
+        <h3>⚡ 3. Опционы и деривативы (Спецназ рынка)</h3>
+        <p><strong>Суперсила:</strong> Возможность заработать сотни процентов на маленьком движении или защитить портфель от катастрофы.</p>
+        <p><strong>Слабость:</strong> Время работает против тебя (талончик брони сгорает), можно легко потерять всю премию.</p>
+      </div>
+
+      <div class="story-calc">
+        <div class="calc-line"><span>Золотое правило инвестора:</span><span style="color:#ffb703;">НЕ КЛАДИ ВСЕ ЯЙЦА В ОДНУ КОРЗИНУ!</span></div>
+        <div class="calc-line"><span>50% портфеля:</span><span>Надежные ОФЗ и вклады (твой бронежилет)</span></div>
+        <div class="calc-line"><span>40% портфеля:</span><span>Акции сильных компаний и ПИФы (твой мотор)</span></div>
+        <div class="calc-line total"><span>10% портфеля:</span><span>Смелые идеи и эксперименты</span></div>
+      </div>
+
+      <!-- ТЕСТ ГЛАВА 6 -->
+      <div class="quiz-zone">
+        <div class="quiz-zone-header">
+          <h3>🎮 Финальный экзамен: Ты настоящий инвестор! (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">1. Что гласит самое главное правило безопасности любого инвестора?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Покупай только то, что рекламируют блогеры</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Вкладывай все деньги только в одну самую любимую компанию</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Диверсифицируй: разделяй деньги между разными инструментами (вклады, облигации, акции), чтобы не потерять всё разом</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">2. Тебе подарили деньги, которые понадобятся ровно через 3 месяца на покупку школьной формы. Куда их лучше положить?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">На короткий банковский вклад или накопительный счет с госстраховкой</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Купить на все деньги рискованные акции стартапа</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Купить опционы на нефть</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="1">
+          <div class="quiz-q-title">3. А если ты копишь на учебу в университете или на покупку первой машины через 10 лет?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Хранить бумажные рубли в банке из-под огурцов</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Собрать портфель из акций надежных компаний, фондов (БПИФ) и облигаций с постоянным реинвестированием дохода</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Каждый день тратить всё до последней копейки</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="2">
+          <div class="quiz-q-title">4. Кто такой «Эмитент»?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Робот, который моет полы на бирже</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Человек, который берет кредит в микрозаймах</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Организация, компания или государство, которая выпускает акции или облигации для привлечения денег</button>
+          </div>
+          <div class="explanation-box"></div>
+        </div>
+
+        <div class="quiz-card" data-right="0">
+          <div class="quiz-q-title">5. Почему начинать инвестировать даже по 100–500 рублей в детстве — это суперсила?</div>
+          <div class="quiz-answers">
+            <button class="btn-ans" onclick="pickQuiz(this, 0)">Потому что главный союзник денег — это ВРЕМЯ. Сложный процент за 15–20 лет способен превратить маленькие карманные деньги в настоящий миллионный капитал!</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 1)">Потому что детям не нужно учить уроки</button>
+            <button class="btn-ans" onclick="pickQuiz(this, 2)">Потому что мороженое станет бесплатным</button>
+          </div>
+          <div class="explanation-box"></div>
         </div>
       </div>
     </section>
 
   </main>
 
-  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
-  <footer class="bottom-nav-bar">
-    <button class="btn-nav btn-nav-prev" id="btnPrevScreen" type="button" disabled>← Назад</button>
-    <button class="btn-nav btn-nav-next" id="btnNextScreen" type="button">Далее →</button>
+  <!-- НАВИГАЦИОННЫЙ ДОК -->
+  <footer class="dock-nav">
+    <button class="btn-nav-act btn-step-prev" id="btnPrevCh" type="button" disabled>← Назад</button>
+    <button class="btn-nav-act btn-step-next" id="btnNextCh" type="button">Дальше →</button>
   </footer>
 
-  <!-- ВЫДВИЖНОЕ ОГЛАВЛЕНИЕ -->
-  <div class="drawer-scrim" id="drawerScrim">
-    <div class="drawer-panel" id="drawerPanel">
-      <div class="drawer-header">
-        <h3>Содержание методички</h3>
-        <button class="btn-drawer-close" id="closeDrawerBtn" type="button">×</button>
+  <!-- ШТОРКА ОГЛАВЛЕНИЯ -->
+  <div class="sheet-modal" id="modalChapters">
+    <div class="sheet-body" id="modalBody">
+      <div class="sheet-head">
+        <h3>Оглавление азбуки</h3>
+        <button class="btn-sheet-x" id="closeTocBtn" type="button">×</button>
       </div>
-      <div class="drawer-links-box">
-        <div class="drawer-topic-link current-link" onclick="switchTopic(1)">
-          <span>1. Хранение денег vs Инвестиции (USD/RUB)</span>
+      <div class="sheet-list">
+        <div class="sheet-item now" onclick="switchChapter(1)">
+          <span>1. Вклад: Сундучок гнома</span>
           <span>→</span>
         </div>
-        <div class="drawer-topic-link" onclick="switchTopic(2)">
-          <span>2. Облигации и ОФЗ (НКД, YTM, дюрация)</span>
+        <div class="sheet-item" onclick="switchChapter(2)">
+          <span>2. Облигации: Расписка с шоколадкой</span>
           <span>→</span>
         </div>
-        <div class="drawer-topic-link" onclick="switchTopic(3)">
-          <span>3. Акции (Дивиденды, P/E, EV/EBITDA, отсечка)</span>
+        <div class="sheet-item" onclick="switchChapter(3)">
+          <span>3. Акции: Кусочек пиццерии</span>
           <span>→</span>
         </div>
-        <div class="drawer-topic-link" onclick="switchTopic(4)">
-          <span>4. ПИФ и Пай (СЧА, комиссии TER, БПИФ)</span>
+        <div class="sheet-item" onclick="switchChapter(4)">
+          <span>4. ПИФ и Пай: Корзина сладостей</span>
           <span>→</span>
         </div>
-        <div class="drawer-topic-link" onclick="switchTopic(5)">
-          <span>5. ИИС (ИИС-3, вычеты до 88 000 ₽, НДФЛ)</span>
+        <div class="sheet-item" onclick="switchChapter(5)">
+          <span>5. Опционы: Бронь приставки</span>
           <span>→</span>
         </div>
-        <div class="drawer-topic-link" onclick="switchTopic(6)">
-          <span>6. Фьючерсы (ГО, плечи, клиринг, Margin Call)</span>
-          <span>→</span>
-        </div>
-        <div class="drawer-topic-link" onclick="switchTopic(7)">
-          <span>7. Опционы (Call/Put, P&L, страйк, тета)</span>
-          <span>→</span>
-        </div>
-        <div class="drawer-topic-link" onclick="switchTopic(8)">
-          <span>8. Структурные ноты (Барьеры, Autocall, риски)</span>
+        <div class="sheet-item" onclick="switchChapter(6)">
+          <span>6. Битва активов: Куда деть 10 000 ₽</span>
           <span>→</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- СКРИПТ ПРИЛОЖЕНИЯ -->
   <script>
-    // Текущий экран и графики
-    let activeIndex = 1;
-    const totalCount = 8;
-    const renderedCharts = {};
+    // Состояние программы
+    let curChapter = 1;
+    const maxChapters = 6;
+    const chartsRendered = {};
 
-    // Элементы интерфейса
-    const openDrawerBtn = document.getElementById('openDrawerBtn');
-    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
-    const drawerScrim = document.getElementById('drawerScrim');
-    const drawerPanel = document.getElementById('drawerPanel');
-    const btnPrevScreen = document.getElementById('btnPrevScreen');
-    const btnNextScreen = document.getElementById('btnNextScreen');
-    const counterDisplay = document.getElementById('counterDisplay');
-    const barFill = document.getElementById('barFill');
+    // DOM элементы
+    const openTocBtn = document.getElementById('openTocBtn');
+    const closeTocBtn = document.getElementById('closeTocBtn');
+    const modalChapters = document.getElementById('modalChapters');
+    const modalBody = document.getElementById('modalBody');
+    const btnPrevCh = document.getElementById('btnPrevCh');
+    const btnNextCh = document.getElementById('btnNextCh');
+    const stepIndicator = document.getElementById('stepIndicator');
+    const progressFill = document.getElementById('progressFill');
 
     // Открытие и закрытие оглавления
-    function openDrawer() {
-      drawerScrim.classList.add('open');
-    }
+    function showToc() { modalChapters.classList.add('open'); }
+    function hideToc() { modalChapters.classList.remove('open'); }
 
-    function closeDrawer() {
-      drawerScrim.classList.remove('open');
-    }
-
-    openDrawerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openDrawer();
+    openTocBtn.addEventListener('click', (e) => { e.stopPropagation(); showToc(); });
+    closeTocBtn.addEventListener('click', (e) => { e.stopPropagation(); hideToc(); });
+    modalChapters.addEventListener('click', (e) => {
+      if (!modalBody.contains(e.target)) hideToc();
     });
 
-    closeDrawerBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeDrawer();
-    });
+    // Переключение глав
+    function switchChapter(idx) {
+      if (idx < 1 || idx > maxChapters) return;
 
-    drawerScrim.addEventListener('click', (e) => {
-      if (!drawerPanel.contains(e.target)) {
-        closeDrawer();
-      }
-    });
+      document.getElementById(`chapter-${curChapter}`).classList.remove('active');
+      curChapter = idx;
+      document.getElementById(`chapter-${curChapter}`).classList.add('active');
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && drawerScrim.classList.contains('open')) {
-        closeDrawer();
-      }
-    });
+      // Шапка
+      stepIndicator.innerText = `Глава ${curChapter} из ${maxChapters}`;
+      progressFill.style.width = `${(curChapter / maxChapters) * 100}%`;
 
-    // Переключение тем
-    function switchTopic(index) {
-      if (index < 1 || index > totalCount) return;
-
-      document.getElementById(`screen-${activeIndex}`).classList.remove('active');
-      activeIndex = index;
-      document.getElementById(`screen-${activeIndex}`).classList.add('active');
-
-      // Обновление заголовка и прогресса
-      counterDisplay.innerText = `Тема ${activeIndex} из ${totalCount}`;
-      barFill.style.width = `${(activeIndex / totalCount) * 100}%`;
-
-      // Состояние кнопок навигации
-      btnPrevScreen.disabled = (activeIndex === 1);
-      if (activeIndex === totalCount) {
-        btnNextScreen.innerText = 'Курс завершен ✓';
+      // Кнопки низа
+      btnPrevCh.disabled = (curChapter === 1);
+      if (curChapter === maxChapters) {
+        btnNextCh.innerText = 'Ты выпускник! 🎓';
       } else {
-        btnNextScreen.innerText = 'Далее →';
+        btnNextCh.innerText = 'Дальше →';
       }
 
-      // Подсветка в оглавлении
-      const links = document.querySelectorAll('.drawer-topic-link');
-      links.forEach((link, idx) => {
-        if (idx + 1 === activeIndex) {
-          link.classList.add('current-link');
-        } else {
-          link.classList.remove('current-link');
-        }
+      // Подсветка в меню
+      const sheetItems = document.querySelectorAll('.sheet-item');
+      sheetItems.forEach((it, i) => {
+        if (i + 1 === curChapter) it.classList.add('now');
+        else it.classList.remove('now');
       });
 
-      // Плавный скролл наверх и закрытие оглавления
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      closeDrawer();
+      hideToc();
 
-      // Отрисовка графиков выбранной темы
-      renderChartsForTopic(activeIndex);
+      // Отрисовка графиков
+      initCharts(curChapter);
     }
 
-    btnPrevScreen.addEventListener('click', () => {
-      if (activeIndex > 1) switchTopic(activeIndex - 1);
+    btnPrevCh.addEventListener('click', () => { if (curChapter > 1) switchChapter(curChapter - 1); });
+    btnNextCh.addEventListener('click', () => {
+      if (curChapter < maxChapters) switchChapter(curChapter + 1);
+      else alert('Ура! Ты прочитал всю финансовую методичку Павла Нестерова и теперь знаешь больше 90% взрослых!');
     });
 
-    btnNextScreen.addEventListener('click', () => {
-      if (activeIndex < totalCount) {
-        switchTopic(activeIndex + 1);
-      } else {
-        alert('Поздравляем! Вы полностью изучили все 8 фундаментальных тем методички Павла Нестерова.');
-      }
-    });
+    // Интерактивные тесты
+    function pickQuiz(btnEl, answerIdx) {
+      const card = btnEl.closest('.quiz-card');
+      const rightIdx = parseInt(card.getAttribute('data-right'), 10);
+      const expBox = card.querySelector('.explanation-box');
+      const allBtns = card.querySelectorAll('.btn-ans');
 
-    // Интерактивное тестирование
-    function handleQuizClick(btn, choiceIdx) {
-      const block = btn.closest('.quiz-block');
-      const correctIdx = parseInt(block.getAttribute('data-correct-idx'), 10);
-      const feedback = block.querySelector('.feedback-panel');
-      const options = block.querySelectorAll('.btn-option');
+      allBtns.forEach(b => b.style.pointerEvents = 'none');
 
-      // Блокировка повторных кликов
-      options.forEach(opt => opt.style.pointerEvents = 'none');
-
-      if (choiceIdx === correctIdx) {
-        btn.classList.add('correct-choice');
-        feedback.className = 'feedback-panel visible-correct';
-        feedback.innerHTML = `
-          <span class="status-badge">✓ Верно!</span>
-          Отличный ответ. Вы точно уловили экономический закон и финансовые правила работы инструмента.
+      if (answerIdx === rightIdx) {
+        btnEl.classList.add('correct-hit');
+        expBox.className = 'explanation-box correct';
+        expBox.innerHTML = `
+          <span class="badge-status">🎉 Верно! Молодец!</span>
+          Ты абсолютно точно рассуждаешь как настоящий финансист!
         `;
       } else {
-        btn.classList.add('wrong-choice');
-        options[correctIdx].classList.add('correct-choice');
-        feedback.className = 'feedback-panel visible-wrong';
-        const correctText = options[correctIdx].innerText;
-        feedback.innerHTML = `
-          <span class="status-badge">✕ Неверно</span>
-          <strong>Правильный ответ:</strong> «${correctText}».<br>
-          <em>Обратите внимание на детали расчетов и финансовые регламенты, изложенные в материале темы.</em>
+        btnEl.classList.add('wrong-hit');
+        allBtns[rightIdx].classList.add('correct-hit');
+        expBox.className = 'explanation-box wrong';
+        const rightText = allBtns[rightIdx].innerText;
+        expBox.innerHTML = `
+          <span class="badge-status">❌ Не совсем так</span>
+          <strong>Правильный ответ:</strong> «${rightText}».<br>
+          <em>Запомни это правило, оно обязательно пригодится в жизни!</em>
         `;
       }
     }
 
     // Инициализация графиков Chart.js
-    function renderChartsForTopic(id) {
-      if (renderedCharts[id]) return;
+    function initCharts(chNum) {
+      if (chartsRendered[chNum]) return;
 
-      if (id === 1) {
-        const ctx1 = document.getElementById('chartTopic1').getContext('2d');
-        new Chart(ctx1, {
+      if (chNum === 6) {
+        const ctx = document.getElementById('kidsBattleChart').getContext('2d');
+        new Chart(ctx, {
           type: 'line',
           data: {
             labels: ['Старт', '2 года', '4 года', '6 лет', '8 лет', '10 лет'],
             datasets: [
               {
-                label: 'Индекс акций (+9% в USD реальных)',
-                data: [10000, 11881, 14115, 16771, 19925, 23673],
-                borderColor: '#10b981',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                borderWidth: 2.5,
+                label: '🚀 Акции (растут с бизнесом)',
+                data: [10000, 14400, 20700, 29800, 43000, 61900],
+                borderColor: '#2ec4b6',
+                backgroundColor: 'rgba(46, 196, 182, 0.1)',
+                borderWidth: 3,
                 tension: 0.3
               },
               {
-                label: 'Замещающие бонды (+6% USD)',
-                data: [10000, 11236, 12624, 14185, 15938, 17908],
-                borderColor: '#3b82f6',
-                borderWidth: 2,
+                label: '🧸 ОФЗ / Вклад (12% в год)',
+                data: [10000, 12500, 15700, 19700, 24700, 31000],
+                borderColor: '#ffb703',
+                borderWidth: 2.5,
                 tension: 0.2
               },
               {
-                label: 'Наличный USD в сейфе (-4% инфляция США)',
-                data: [10000, 9216, 8493, 7827, 7213, 6648],
-                borderColor: '#f59e0b',
+                label: '🛏️ Под подушкой (съела инфляция)',
+                data: [10000, 8100, 6500, 5300, 4300, 3500],
+                borderColor: '#e71d36',
                 borderWidth: 2,
                 borderDash: [5, 5],
                 tension: 0.2
-              },
-              {
-                label: 'Рублевый кэш в USD (с учетом девальвации)',
-                data: [10000, 7500, 5625, 4218, 3164, 2373],
-                borderColor: '#ef4444',
-                borderWidth: 2,
-                borderDash: [3, 3],
-                tension: 0.2
               }
             ]
           },
           options: {
             responsive: true,
             plugins: {
-              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } },
+              legend: { labels: { color: '#cbd5e1', font: { family: 'Nunito', size: 11, weight: 'bold' } } },
               tooltip: {
                 callbacks: {
-                  label: (c) => `${c.dataset.label}: $${Math.round(c.raw).toLocaleString()}`
+                  label: (c) => `${c.dataset.label}: ${Math.round(c.raw).toLocaleString()} ₽`
                 }
               }
             },
             scales: {
-              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: '#1c273e' } },
+              x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e2c47' } },
               y: { 
-                ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => '$' + v.toLocaleString() }, 
-                grid: { color: '#1c273e' } 
+                ticks: { color: '#94a3b8', callback: v => v.toLocaleString() + ' ₽' }, 
+                grid: { color: '#1e2c47' } 
               }
             }
           }
         });
-        renderedCharts[id] = true;
-      }
-
-      if (id === 5) {
-        const ctx5 = document.getElementById('chartTopic5').getContext('2d');
-        new Chart(ctx5, {
-          type: 'bar',
-          data: {
-            labels: ['1 год', '2 года', '3 года', '4 года', '5 лет'],
-            datasets: [
-              {
-                label: 'Обычный брокерский счет (ОФЗ 12%)',
-                data: [448, 950, 1512, 2142, 2847],
-                backgroundColor: '#1c273e',
-                borderColor: '#2b384e',
-                borderWidth: 1
-              },
-              {
-                label: 'ИИС-3 (ОФЗ 12% + возврат НДФЛ 13% со взноса)',
-                data: [500, 1072, 1726, 2473, 3324],
-                backgroundColor: 'rgba(16, 185, 129, 0.8)',
-                borderColor: '#10b981',
-                borderWidth: 1
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } },
-              tooltip: {
-                callbacks: {
-                  label: (c) => `${c.dataset.label}: ${c.raw.toLocaleString()} тыс. ₽`
-                }
-              }
-            },
-            scales: {
-              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: '#1c273e' } },
-              y: { 
-                ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => v + ' тыс' }, 
-                grid: { color: '#1c273e' } 
-              }
-            }
-          }
-        });
-        renderedCharts[id] = true;
-      }
-
-      if (id === 7) {
-        const ctx7 = document.getElementById('chartTopic7').getContext('2d');
-        new Chart(ctx7, {
-          type: 'line',
-          data: {
-            labels: ['75', '85', '95 (Безубыток Put)', '100 (Страйк)', '105 (Безубыток Call)', '115', '125'],
-            datasets: [
-              {
-                label: 'P&L Покупателя Call (Страйк 100, Премия 5)',
-                data: [-5, -5, -5, -5, 0, 10, 20],
-                borderColor: '#3b82f6',
-                backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                borderWidth: 2.5,
-                tension: 0
-              },
-              {
-                label: 'P&L Покупателя Put (Страйк 100, Премия 5)',
-                data: [20, 10, 0, -5, -5, -5, -5],
-                borderColor: '#f59e0b',
-                backgroundColor: 'rgba(245, 158, 11, 0.1)',
-                borderWidth: 2.5,
-                tension: 0
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            plugins: {
-              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } }
-            },
-            scales: {
-              x: { 
-                title: { display: true, text: 'Рыночная цена базового актива на дату экспирации (₽)', color: '#94a3b8', font: { size: 10 } },
-                ticks: { color: '#94a3b8', font: { size: 10 } }, 
-                grid: { color: '#1c273e' } 
-              },
-              y: { 
-                title: { display: true, text: 'Чистая прибыль / Убыток (P&L)', color: '#94a3b8', font: { size: 10 } },
-                ticks: { color: '#94a3b8', font: { size: 10 } }, 
-                grid: { color: '#1c273e' } 
-              }
-            }
-          }
-        });
-        renderedCharts[id] = true;
+        chartsRendered[chNum] = true;
       }
     }
 
-    // Инициализация приложения
+    // Старт
     window.addEventListener('DOMContentLoaded', () => {
-      renderChartsForTopic(1);
+      initCharts(1);
     });
   </script>
 </body>
