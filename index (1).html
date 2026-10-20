@@ -1,0 +1,2050 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Методичка по финансовым рынкам | Павел Нестеров</title>
+  
+  <!-- Шрифты Google Fonts: Inter и JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Библиотека графиков Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-surface: #101623;
+      --bg-card: #172033;
+      --bg-card-alt: #1c273e;
+      --border: #2b384e;
+      --border-focus: #3b82f6;
+      --accent: #2563eb;
+      --accent-light: #60a5fa;
+      --accent-glow: rgba(37, 99, 235, 0.25);
+      --usd-green: #10b981;
+      --usd-glow: rgba(16, 185, 129, 0.15);
+      --rub-orange: #f59e0b;
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --text-white: #f8fafc;
+      --text-muted: #94a3b8;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      font-family: var(--font-main);
+      line-height: 1.65;
+      padding-bottom: 96px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Верхняя панель управления */
+    .top-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(16, 22, 35, 0.96);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px 12px;
+    }
+
+    .author-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.18), rgba(16, 185, 129, 0.18));
+      border: 1px solid rgba(59, 130, 246, 0.45);
+      color: #93c5fd;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .topic-counter-text {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .btn-drawer-trigger {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-white);
+      font-size: 12.5px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-drawer-trigger:hover, .btn-drawer-trigger:active {
+      background: var(--border);
+      border-color: var(--accent-light);
+    }
+
+    .progress-track {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6, #10b981);
+      width: 12.5%;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Основная разметка страниц */
+    .app-viewport {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    .topic-screen {
+      display: none;
+      animation: screenEnter 0.25s ease-out;
+    }
+
+    .topic-screen.active {
+      display: block;
+    }
+
+    @keyframes screenEnter {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Типографика */
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+
+    .reading-time-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #93c5fd;
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      padding: 2px 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+    }
+
+    .lead-paragraph {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      line-height: 1.6;
+    }
+
+    h2 {
+      font-size: 18.5px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--accent-light);
+      margin: 18px 0 10px;
+    }
+
+    p {
+      font-size: 14.5px;
+      color: #cbd5e1;
+      margin-bottom: 15px;
+      line-height: 1.65;
+    }
+
+    ul, ol {
+      padding-left: 20px;
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 14.5px;
+    }
+
+    li {
+      margin-bottom: 8px;
+      line-height: 1.55;
+    }
+
+    strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    /* Индикатор риска */
+    .risk-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px 16px;
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .risk-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .risk-scale {
+      display: flex;
+      gap: 6px;
+      height: 8px;
+    }
+
+    .risk-tick {
+      flex: 1;
+      border-radius: 4px;
+      background: #252e3e;
+    }
+
+    .risk-tick.lvl-green { background: #10b981; }
+    .risk-tick.lvl-blue { background: #3b82f6; }
+    .risk-tick.lvl-yellow { background: #f59e0b; }
+    .risk-tick.lvl-red { background: #ef4444; }
+
+    /* Карточки */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .card-usd {
+      border-left: 4px solid var(--usd-green);
+      background: linear-gradient(90deg, var(--usd-glow) 0%, var(--bg-card) 100%);
+    }
+
+    .card-risk {
+      border-left: 4px solid var(--danger);
+      background: linear-gradient(90deg, var(--danger-bg) 0%, var(--bg-card) 100%);
+    }
+
+    .card-accent {
+      border-left: 4px solid var(--accent);
+      background: linear-gradient(90deg, var(--accent-glow) 0%, var(--bg-card) 100%);
+    }
+
+    /* Вычислительные блоки */
+    .math-box {
+      background: #090d15;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin: 16px 0;
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    .math-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+      gap: 12px;
+    }
+
+    .math-row:last-child {
+      border-bottom: none;
+      padding-top: 10px;
+      font-weight: 700;
+      color: #93c5fd;
+      font-size: 13.5px;
+    }
+
+    /* Таблицы */
+    .table-responsive {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+      background: var(--bg-surface);
+    }
+
+    th {
+      background: var(--bg-card-alt);
+      color: #ffffff;
+      padding: 11px 13px;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 11px 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: #cbd5e1;
+    }
+
+    /* Графические контейнеры */
+    .chart-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px 12px;
+      margin: 22px 0;
+    }
+
+    .chart-caption {
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #f1f5f9;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 4px;
+    }
+
+    /* SVG контейнеры */
+    .svg-diagram-card {
+      background: #0b101a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .svg-diagram-card svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .svg-caption-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* Тесты */
+    .quiz-card-group {
+      background: #0c121e;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px 14px;
+      margin: 36px 0 16px;
+    }
+
+    .quiz-group-title {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .quiz-group-title h3 {
+      font-size: 17px;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .quiz-block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .quiz-q-text {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+      line-height: 1.45;
+    }
+
+    .quiz-options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-option {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13.5px;
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.4;
+      transition: all 0.15s;
+    }
+
+    .btn-option:active {
+      transform: scale(0.99);
+    }
+
+    .btn-option.correct-choice {
+      background: rgba(16, 185, 129, 0.25) !important;
+      border-color: #10b981 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
+
+    .btn-option.wrong-choice {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: #ef4444 !important;
+      color: #ffffff !important;
+    }
+
+    .feedback-panel {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .feedback-panel.visible-correct {
+      display: block;
+      background: var(--success-bg);
+      border: 1px solid var(--success);
+      color: #a7f3d0;
+    }
+
+    .feedback-panel.visible-wrong {
+      display: block;
+      background: var(--danger-bg);
+      border: 1px solid var(--danger);
+      color: #fecaca;
+    }
+
+    .status-badge {
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 11.5px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* Нижняя панель */
+    .bottom-nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba(16, 22, 35, 0.97);
+      backdrop-filter: blur(14px);
+      border-top: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      gap: 12px;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-nav-prev {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-white);
+    }
+
+    .btn-nav-prev:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .btn-nav-next {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    /* Выдвижная шторка оглавления */
+    .drawer-scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(5px);
+      z-index: 2000;
+      display: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .drawer-scrim.open {
+      display: block;
+      opacity: 1;
+    }
+
+    .drawer-panel {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-radius: 24px 24px 0 0;
+      padding: 20px 16px 36px;
+      max-height: 85vh;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.25s ease-out;
+    }
+
+    .drawer-scrim.open .drawer-panel {
+      transform: translateY(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .drawer-header h3 {
+      font-size: 18px;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .btn-drawer-close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 26px;
+      cursor: pointer;
+      line-height: 1;
+      padding: 4px 8px;
+    }
+
+    .drawer-links-box {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-topic-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-card);
+      border: 1px solid transparent;
+      color: #cbd5e1;
+      font-size: 13.5px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .drawer-topic-link.current-link {
+      border-color: var(--accent);
+      background: rgba(37, 99, 235, 0.15);
+      color: #93c5fd;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ВЕРХНЯЯ ШАПКА -->
+  <header class="top-header">
+    <div class="author-badge">
+      <span>★</span> Методичка составлена Павлом Нестеровым
+    </div>
+    <div class="header-row">
+      <span class="topic-counter-text" id="counterDisplay">Тема 1 из 8</span>
+      <button class="btn-drawer-trigger" id="openDrawerBtn" type="button">
+        <span>☰</span> Оглавление
+      </button>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="barFill"></div>
+    </div>
+  </header>
+
+  <!-- ОСНОВНАЯ ОБЛАСТЬ СТРАНИЦ -->
+  <main class="app-viewport">
+
+    <!-- СТРАНИЦА 1: КЭШ VS ИНВЕСТИЦИИ В USD И РИСКАХ -->
+    <section class="topic-screen active" id="screen-1">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Хранение денег vs Инвестиции: Рубль, Доллар или Активы?</h1>
+      <p class="lead-paragraph">Анатомия обесценения капитала, фундаментальное сравнение покупательной способности рубля и доллара США, разрушение мифа о «безопасном хранении наличных».</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Уровень риска удержания наличных денег:</span>
+          <span style="color:#ef4444;">100% потеря от инфляции</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+        </div>
+      </div>
+
+      <h2>Рублевая иллюзия богатства vs Долларовая реальность</h2>
+      <p>Многие начинающие инвесторы совершают фундаментальную ошибку: они оценивают свой капитал исключительно в рублях. Если рублевый вклад принес <strong>+16% за год</strong>, инвестор чувствует рост богатства. Но экономика РФ зависит от глобального импорта — электроника, автомобили, оборудование, сырье и медикаменты имеют мировую долларовую себестоимость.</p>
+      
+      <p>Если за этот же год курс доллара к рублю (USD/RUB) вырос, например, на <strong>+28%</strong>, то реальная международная покупательная способность рублевого капитала снизилась. Инвестор номинально получил больше рублей, но фактически стал <strong>беднее в пересчете на реальные мировые блага</strong>.</p>
+
+      <div class="card card-usd">
+        <h3>Математический расчет: Депозит 16% против девальвации рубля</h3>
+        <p>Инвестор положил на депозит <strong>1 000 000 ₽</strong>. В начале года курс USD составлял <strong>90 ₽</strong> (сумма эквивалентна <strong>$11 111</strong>). Через 1 год курс вырос до <strong>115 ₽</strong>.</p>
+        <div class="math-box">
+          <div class="math-row"><span>Стартовый капитал (RUB / USD):</span><span>1 000 000 ₽ / $11 111</span></div>
+          <div class="math-row"><span>Баланс вклада через 1 год (+16%):</span><span>1 160 000 ₽</span></div>
+          <div class="math-row"><span>Эквивалент в USD по курсу 115 ₽:</span><span>$10 086</span></div>
+          <div class="math-row"><span>Рублевый результат:</span><span style="color:#10b981;">+160 000 ₽ (+16.0%)</span></div>
+          <div class="math-row"><span>Реальный долларовый результат:</span><span style="color:#ef4444;">-$1 025 (-9.2%)</span></div>
+        </div>
+      </div>
+
+      <div class="card card-risk">
+        <h3>А если хранить наличные доллары «под подушкой»?</h3>
+        <p>Наличный доллар спасает от девальвации рубля, но <strong>он также обесценивается</strong>. Долларовая инфляция в США (US CPI — Consumer Price Index) в последние годы держалась в коридоре 3–8% в год. За 10 лет $10 000 наличных долларов теряют свыше трети своей покупательной способности на покупку американских и мировых товаров.</p>
+      </div>
+
+      <!-- График темы 1 -->
+      <div class="chart-container">
+        <div class="chart-caption">📊 Сравнение покупательной способности $10 000 за 10 лет (в твердой валюте с учетом инфляции США)</div>
+        <canvas id="chartTopic1" height="230"></canvas>
+      </div>
+
+      <h2>Сводная матрица классов активов в долларах и рисках</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Класс актива</th>
+              <th>Реальная дох-ть (USD)</th>
+              <th>Макс. историч. просадка</th>
+              <th>Валютный риск</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Рублевый кэш в сейфе</strong></td>
+              <td>Отрицательная (-12...-18%/год)</td>
+              <td>-100% (покупат. способность)</td>
+              <td>Экстремальный</td>
+            </tr>
+            <tr>
+              <td><strong>Наличный доллар в сейфе</strong></td>
+              <td>-3...-4% в год (US CPI)</td>
+              <td>Медленное непрерывное таяние</td>
+              <td>Низкий</td>
+            </tr>
+            <tr>
+              <td><strong>ОФЗ / Рублевые облигации</strong></td>
+              <td>0...3% в год в долларах</td>
+              <td>-25% при резких девальвациях</td>
+              <td>Высокий рублевый риск</td>
+            </tr>
+            <tr>
+              <td><strong>Замещающие облигации РФ</strong></td>
+              <td>6...9% годовых в долларах</td>
+              <td>-8...-12% (кредитный спред)</td>
+              <td>Привязаны к курсу USD</td>
+            </tr>
+            <tr>
+              <td><strong>Индекс акций бизнеса</strong></td>
+              <td>8...12% годовых в долларах</td>
+              <td>-35...-50% в кризисы</td>
+              <td>Бизнес индексирует цены</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Тест к теме 1 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 1 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">1. Инвестор заработал +20% в рублях на депозите, но курс доллара за этот же год вырос на 30%. Каков реальный долларовый финансовый результат?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Прибыль +50%</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Прибыль +10%</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Реальный долларовый убыток около -7.7%</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Доходность осталась строго нулевой</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">2. Сохраняют ли наличные доллары США под подушкой 100% своей ценности за 10 лет?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Да, доллар — мировая валюта и не подвержен инфляции</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Нет, долларовая инфляция (US CPI) стабильно съедает покупательную способность на 3–5% в год</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Да, если хранить только стодолларовые купюры</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ценность растет благодаря дефициту наличных</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Какой инструмент в российской юрисдикции позволяет легально получать доходность в привязке к доллару США без риска блокировки Euroclear?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Замещающие облигации российских корпораций (номинированы в USD, расчеты в рублях по курсу ЦБ)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Обычные рублевые вклады до востребования</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Покупка наличных юаней в кассе</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фьючерс на погоду</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Что экономисты называют «рублевой иллюзией доходности»?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Комиссию брокера за конвертацию валюты</button>
+            <button class="choice-btn btn-option" onclick="handleQuizClick(this, 1)">Ошибочное списание налогов банком</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Временный мораторий на снятие депозитов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ощущение роста капитала из-за увеличения количества рублей, которое игнорирует обесценение валюты и инфляцию</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">5. Почему акции компаний-экспортеров РФ (нефть, металлы, газ) часто выступают естественным щитом от девальвации рубля?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Государство освобождает экспортеров от всех налогов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">ЦБ выкупает их акции по фиксированной цене</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Их выручка формируется в твердой валюте или привязана к мировым ценам, а операционные затраты остаются рублевыми</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Экспортеры не подвержены рыночным рискам</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 2: ОБЛИГАЦИИ И ОФЗ -->
+    <section class="topic-screen" id="screen-2">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Облигации и ОФЗ: Архитектура долгового рынка</h1>
+      <p class="lead-paragraph">Механика работы самого емкого финансового рынка: номинал, дисконт, купоны, расчет НКД, дюрация Маколея, влияние ставки ЦБ и виды ОФЗ (ПД, ПК, ИН).</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Кредитный риск ОФЗ:</span>
+          <span style="color:#10b981;">Минимальный (надежность Минфина РФ)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-green"></div>
+          <div class="risk-tick"></div>
+          <div class="risk-tick"></div>
+          <div class="risk-tick"></div>
+        </div>
+      </div>
+
+      <!-- SVG диаграмма купона и НКД -->
+      <div class="svg-diagram-card">
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="20" width="580" height="8" rx="4" fill="#252e3e"/>
+          <circle cx="50" cy="24" r="10" fill="#3b82f6"/>
+          <text x="50" y="55" fill="#93c5fd" font-size="11" text-anchor="middle" font-family="sans-serif">Купон №1 (0 ₽)</text>
+          
+          <circle cx="360" cy="24" r="8" fill="#f59e0b"/>
+          <text x="360" y="55" fill="#f59e0b" font-size="11" text-anchor="middle" font-family="sans-serif">Сделка на бирже (День 90)</text>
+
+          <circle cx="550" cy="24" r="10" fill="#10b981"/>
+          <text x="550" y="55" fill="#6ee7b7" font-size="11" text-anchor="middle" font-family="sans-serif">Купон №2 (50 ₽)</text>
+
+          <line x1="50" y1="24" x2="360" y2="24" stroke="#f59e0b" stroke-width="8" stroke-linecap="round"/>
+          <text x="205" y="15" fill="#f59e0b" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">НКД = 25 ₽ (Покупатель возмещает Продавцу)</text>
+
+          <rect x="60" y="80" width="480" height="68" rx="8" fill="#172033" stroke="#3b82f6" stroke-width="1"/>
+          <text x="300" y="105" fill="#ffffff" font-size="12" text-anchor="middle" font-family="sans-serif">Принцип непрерывности дохода: продавец не теряет процент за 90 дней,</text>
+          <text x="300" y="127" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">а покупатель в день купона вернет себе ранее уплаченный продавцу НКД.</text>
+        </svg>
+        <div class="svg-caption-text">Схема накопления купонного дохода (НКД) при покупке и продаже облигации на бирже</div>
+      </div>
+
+      <h2>Ключевые параметры облигации</h2>
+      <ul>
+        <li><strong>Номинал:</strong> Базовая сумма долга (для подавляющего большинства ОФЗ = 1 000 ₽). По этой цене эмитент погашает бумагу в конце срока.</li>
+        <li><strong>Чистая цена (Clean Price):</strong> Биржевая котировка, отображаемая в процентах от номинала (например, 82.5% = 825 ₽).</li>
+        <li><strong>Грязная цена (Dirty Price):</strong> Реальная сумма списания при покупке: <code style="color:#93c5fd;">Чистая цена в рублях + НКД</code>.</li>
+        <li><strong>Дюрация Маколея:</strong> Средневзвешенный срок возврата инвестиций с учетом купонов. Главное правило: <em>чем длиннее дюрация, тем сильнее падает рыночная цена облигации при росте ключевой ставки ЦБ</em>.</li>
+      </ul>
+
+      <div class="card card-accent">
+        <h3>Пошаговый расчет доходности к погашению (YTM)</h3>
+        <p>Инвестор покупает ОФЗ-ПД 26238 со сроком до погашения <strong>3 года</strong>. Номинал — <strong>1 000 ₽</strong>. Рыночная цена — <strong>80% (800 ₽)</strong>. Фиксированный купон — <strong>80 ₽ в год</strong>.</p>
+        <div class="math-box">
+          <div class="math-row"><span>Затраты на покупку тела облигации:</span><span>800.00 ₽</span></div>
+          <div class="math-row"><span>Сумма купонов за 3 года (80 ₽ × 3):</span><span>+240.00 ₽</span></div>
+          <div class="math-row"><span>Дисконт к погашению (1 000 ₽ - 800 ₽):</span><span>+200.00 ₽</span></div>
+          <div class="math-row"><span>Итого суммарная прибыль за 3 года:</span><span>+440.00 ₽</span></div>
+          <div class="math-row"><span>Простая доходность за 3 года:</span><span>440 / 800 = 55.0%</span></div>
+          <div class="math-row"><span>Эффективная доходность к погашению (YTM):</span><span>~ 16.2% годовых</span></div>
+        </div>
+      </div>
+
+      <h2>Разновидности государственных облигаций (ОФЗ)</h2>
+      <ul>
+        <li><strong>ОФЗ-ПД (Постоянный доход):</strong> Фиксированный купон на весь срок. Идеальны при ожидании снижения ставок ЦБ.</li>
+        <li><strong>ОФЗ-ПК (Переменный купон, флоатеры):</strong> Купон привязан к ставке RUONIA (практически равен ключевой ставке ЦБ). Тело бумаги почти не проседает в цене при ужесточении ДКП.</li>
+        <li><strong>ОФЗ-ИН (Индексируемый номинал, линкеры):</strong> Номинал ежедневно индексируется на величину инфляции Росстата с задержкой в 3 месяца, плюс небольшой фиксированный купон (2.5–3%).</li>
+      </ul>
+
+      <!-- Тест к теме 2 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 2 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">1. ЦБ РФ резко поднял ключевую ставку с 16% до 21%. Что произойдет с рыночной ценой ранее выпущенных 10-летних ОФЗ с фиксированным купоном 9%?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Их рыночная цена вырастет</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Их цена упадет, чтобы доходность к погашению (YTM) сравнялась с новыми рыночными ставками</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Цена не изменится, так как номинал зафиксирован государством</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Облигации будут принудительно погашены</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">2. В терминале котировка ОФЗ отображается как 88.50. Сколько рублей стоит тело этой облигации при номинале 1 000 ₽?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">885.00 ₽ (88.5% от номинала)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">88.50 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">1 088.50 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">8 850.00 ₽</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">3. Что такое кредитный спред облигации?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Комиссия биржи за выставление заявки в стакан</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Разница между ценой покупки и продажи валюты</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Премия в доходности (в % годовых), которую эмитент предлагает инвестору сверх безрисковой ставки ОФЗ за риск дефолта</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Скидка на оплату НДФЛ</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Какой тип ОФЗ наименее подвержен падению рыночной цены в цикле повышения ключевой ставки ЦБ?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">ОФЗ-ПД с погашением через 15 лет</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Бескупонные облигации</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">ОФЗ-АД с амортизацией</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">ОФЗ-ПК (флоатеры с плавающим купоном, привязанным к RUONIA)</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Если инвестор держит ОФЗ строго до даты погашения, влияет ли временная биржевая просадка цены бумаги на итоговую сумму возврата?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Да, эмитент вернет только упавшую рыночную стоимость</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Нет, в день погашения Минфин РФ выплатит ровно 100% номинала (1 000 ₽) и последний купон</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Инвестору придется доплатить разницу брокеру</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Выплата откладывается на 3 года</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 3: АКЦИИ -->
+    <section class="topic-screen" id="screen-3">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Акции: Долевое совладение и мультипликаторы</h1>
+      <p class="lead-paragraph">Как оценивать фундаментальную стоимость бизнеса: обыкновенные и привилегированные акции, механика дивидендного гэпа, мультипликаторы P/E, EV/EBITDA, Net Debt/EBITDA и расчет полной доходности.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Рыночная волатильность акций:</span>
+          <span style="color:#f59e0b;">Умеренно-высокая (просадки в кризис до 40–50%)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick"></div>
+        </div>
+      </div>
+
+      <h2>Фундаментальные мультипликаторы стоимости</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Метрика</th>
+              <th>Формула расчета</th>
+              <th>Смысл показателя</th>
+              <th>Норма для рынка РФ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>P/E</strong></td>
+              <td>Капитализация / Чистая прибыль</td>
+              <td>За сколько лет бизнес окупает себя прибылью</td>
+              <td>3.5 – 6.5 лет</td>
+            </tr>
+            <tr>
+              <td><strong>P/B</strong></td>
+              <td>Капитализация / Собственный капитал</td>
+              <td>Отношение цены акций к балансовым активам</td>
+              <td>&lt; 1.0 (бизнес дешевле станков и заводов)</td>
+            </tr>
+            <tr>
+              <td><strong>EV/EBITDA</strong></td>
+              <td>(Капитализация + Чистый долг) / EBITDA</td>
+              <td>Окупаемость с учетом долговой нагрузки</td>
+              <td>2.5 – 4.5x</td>
+            </tr>
+            <tr>
+              <td><strong>Net Debt / EBITDA</strong></td>
+              <td>Чистый долг / EBITDA</td>
+              <td>Коэффициент закредитованности компании</td>
+              <td>&lt; 2.0x (выше 3.0x — высокая опасность)</td>
+            </tr>
+            <tr>
+              <td><strong>ROE</strong></td>
+              <td>Чистая прибыль / Собственный капитал</td>
+              <td>Рентабельность вложенных акционерами денег</td>
+              <td>Выше 20% в год</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card card-accent">
+        <h3>Кейс расчета Total Return (Курсовой рост + Дивиденды + Реинвестирование)</h3>
+        <p>Инвестор купил 1 000 акций нефтяной компании по цене <strong>500 ₽</strong> (вложено 500 000 ₽). Совет директоров утвердил годовой дивиденд <strong>75 ₽ на акцию</strong>. К концу года акции выросли до <strong>580 ₽</strong>.</p>
+        <div class="math-box">
+          <div class="math-row"><span>Дивидендная доходность к цене покупки:</span><span>75 / 500 = 15.0%</span></div>
+          <div class="math-row"><span>Начислено дивидендов брутто:</span><span>75 000.00 ₽</span></div>
+          <div class="math-row"><span>Удержан налог НДФЛ 13%:</span><span>-9 750.00 ₽</span></div>
+          <div class="math-row"><span>Чистые дивиденды на руки:</span><span>+65 250.00 ₽</span></div>
+          <div class="math-row"><span>Прирост курсовой стоимости (580 - 500) × 1 000:</span><span>+80 000.00 ₽</span></div>
+          <div class="math-row"><span>Итоговый Total Return за год:</span><span>+145 250 ₽ (+29.05% годовых!)</span></div>
+        </div>
+      </div>
+
+      <h2>Дивидендный гэп и дата закрытия реестра</h2>
+      <p>На Московской Бирже действует режим торгов <strong>Т+1</strong>. Чтобы получить дивиденды, акцию необходимо купить <em>за 1 торговый день до даты закрытия реестра (отсечки)</em>. На следующий день после отсечки бумага открывается падением примерно на размер дивиденда — это и есть <strong>дивидендный гэп</strong>, так как из капитала компании ушли реальные деньги на счета акционеров.</p>
+
+      <!-- Тест к теме 3 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 3 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">1. У металлургической компании показатель Net Debt / EBITDA составляет 4.2x при ключевой ставке 20%. О чем это предупреждает инвестора?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Бизнес абсолютно защищен от кризисов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Дивиденды вырастут в 4 раза</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Компания опасно закредитована: выплата процентов по долгу может сожрать всю чистую прибыль и привести к отмене дивидендов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Акции гарантированно удвоятся</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">2. Что такое дивидендный гэп на открытии торгов?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Штраф брокера за удержание акций</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Падение цены акции утром в экс-дивидендный день примерно на величину выплачиваемого дивиденда</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Комиссия Московской Биржи</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">День отмены торгов акциями</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Чем отличаются обыкновенные акции от привилегированных акций (префов)?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Обыкновенные дают право голоса на собрании акционеров, а по префам в уставе обычно закреплен четкий приоритет и фиксированный процент чистой прибыли на дивиденд</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Префы выпускает только Центробанк</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Обыкновенные акции нельзя продавать 3 года</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Префы дают скидку на покупку бензина</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Что происходит с акциями компании при обратном выкупе (Buyback)?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Компания объявляет о банкротстве</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Количество акций удваивается</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Дивиденды запрещаются на 5 лет</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Компания выкупает свои акции с открытого рынка и гасит их: на оставшиеся в обращении акции приходится большая доля прибыли</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Мультипликатор P/E Сбера равен 3.9, а европейского банка — 11.5. Означает ли это, что Сбер привлекательнее для покупки?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Нет, европейский банк дешевле</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Да, Сбер стоит дешевле по окупаемости чистой прибылью, однако дисконт закладывает геополитические и санкционные риски РФ</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Мультипликатор P/E вообще неприменим к банкам</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Это свидетельствует об убытках компании</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 4: ПИФ И ПАЙ -->
+    <section class="topic-screen" id="screen-4">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>ПИФ и ПАЙ: Механика коллективных инвестиций</h1>
+      <p class="lead-paragraph">Как устроены фонды: расчет стоимости чистых активов (СЧА), БПИФ vs ОПИФ vs ЗПИФ, роль Специализированного депозитария, скрытые комиссии TER и налоговая льгота ЛДВ.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Диверсификация портфеля ПИФ:</span>
+          <span style="color:#10b981;">Высокая (десятки и сотни компаний внутри одного пая)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-green"></div>
+          <div class="risk-tick lvl-blue"></div>
+          <div class="risk-tick"></div>
+          <div class="risk-tick"></div>
+        </div>
+      </div>
+
+      <!-- SVG диаграмма фонда СЧА -->
+      <div class="svg-diagram-card">
+        <svg viewBox="0 0 600 180" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="220" height="140" rx="12" fill="#172033" stroke="#3b82f6" stroke-width="2"/>
+          <text x="130" y="45" fill="#93c5fd" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Активы фонда (Корзина)</text>
+          <text x="130" y="75" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• 50 акций Индекса Мосбиржи</text>
+          <text x="130" y="95" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• Пакеты ОФЗ и корпоративных бондов</text>
+          <text x="130" y="115" fill="#cbd5e1" font-size="11" text-anchor="middle" font-family="sans-serif">• Денежный остаток и РЕПО</text>
+          <text x="130" y="145" fill="#10b981" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">СЧА = 1 000 000 000 ₽</text>
+
+          <path d="M 260 90 L 330 90" stroke="#f59e0b" stroke-width="3" marker-end="url(#arrow)"/>
+          <text x="295" y="80" fill="#f59e0b" font-size="11" text-anchor="middle" font-family="sans-serif">Деление на</text>
+          <text x="295" y="110" fill="#f59e0b" font-size="10" text-anchor="middle" font-family="sans-serif">10 млн паев</text>
+
+          <rect x="350" y="35" width="220" height="110" rx="12" fill="#172033" stroke="#10b981" stroke-width="2"/>
+          <text x="460" y="65" fill="#6ee7b7" font-size="14" font-weight="bold" text-anchor="middle" font-family="sans-serif">1 БИРЖЕВОЙ ПАЙ</text>
+          <text x="460" y="95" fill="#ffffff" font-size="14" text-anchor="middle" font-family="sans-serif">Расчетная цена = 100.00 ₽</text>
+          <text x="460" y="125" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">Покупка в приложении брокера от 1 шт.</text>
+        </svg>
+        <div class="svg-caption-text">Формирование стоимости одного пая на основе СЧА фонда</div>
+      </div>
+
+      <h2>Виды фондов в РФ</h2>
+      <ul>
+        <li><strong>БПИФ (Биржевой фонд):</strong> Российский аналог зарубежных ETF. Свободно торгуется на бирже в торговые часы через любого брокера. Сделка совершается за секунду по рыночной котировке.</li>
+        <li><strong>ОПИФ (Открытый):</strong> Покупка и погашение осуществляются через офис или личный кабинет конкретной Управляющей Компании (УК) по расчетной стоимости СЧА следующего дня. Часто берут надбавки (при покупке) и скидки (при продаже) до 1–2%.</li>
+        <li><strong>ЗПИФ (Закрытый):</strong> Создаются под неликвидные активы (коммерческая недвижимость, склады, венчурные проекты). Погасить пай нельзя до закрытия фонда, продать можно только на вторичном рынке при наличии покупателя.</li>
+      </ul>
+
+      <div class="card card-usd">
+        <h3>Внимание к скрытым комиссиям (TER — Total Expense Ratio)</h3>
+        <p>Комиссия управляющей компании не приходит отдельной квитанцией — она <strong>ежедневно микродолями вычитается из активов фонда</strong>. Если фонд берет комиссию <strong>3.0% в год</strong>, а рынок вырос на <strong>10%</strong>, инвестор получит лишь <strong>7%</strong>. За 10 лет сложный процент таких комиссий отнимает <strong>до 25–30% всей потенциальной прибыли инвестора</strong>!</p>
+      </div>
+
+      <!-- Тест к теме 4 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 4 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">1. Инвестор располагает суммой в 3 000 рублей, но хочет диверсифицированный портфель из 50 крупнейших акций РФ. Что ему выбрать?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Купить одну акцию Норникеля</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Купить паи БПИФ на Индекс Мосбиржи (например, TMOS или EQMX), где внутри уже сбалансированы топ-50 компаний</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Взять кредит для покупки каждого лота акций по отдельности</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Открыть валютный вклад</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">2. Кто по закону контролирует Управляющую Компанию и хранит активы фонда отдельно от баланса самой УК?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Маркетмейкер биржи</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Полиция региона</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Специализированный депозитарий (Спецдеп), согласующий каждую операцию УК с активами фонда</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Сам инвестор через регулярные звонки</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Какое налоговое преимущество имеют российские БПИФ акций при получении дивидендов от компаний внутри фонда?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Фонд не платит налог на прибыль 13% с дивидендов и реинвестирует 100% полученных средств обратно в покупку акций</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Фонд платит налог по ставке 30%</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Дивиденды изымаются в пользу государства</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фонд распределяет дивиденды только руководству УК</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Как изменяется расчетная стоимость одного пая при росте стоимости акций, входящих в состав фонда?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Цена пая падает</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Цена остается неизменной всегда</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Фонд аннулирует паи</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">СЧА фонда увеличивается, и стоимость пая пропорционально возрастает</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Какое условие необходимо соблюсти для освобождения от НДФЛ прибыли от продажи паев по льготе долгосрочного владения (ЛДВ)?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Удерживать паи не менее 6 месяцев</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Непрерывно владеть паями более 3 полных лет (лимит безналоговой прибыли — до 3 000 000 ₽ за каждый год владения)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Быть индивидуальным предпринимателем</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Покупать паи исключительно в выходные дни</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 5: ИИС -->
+    <section class="topic-screen" id="screen-5">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>ИИС: Налоговые щиты инвестора (ИИС-3)</h1>
+      <p class="lead-paragraph">Полный разбор государственного режима поддержки частных инвесторов: прогрессивная шкала НДФЛ от 13% до 22% (возврат до 88 000 ₽/год), освобождение прибыли до 30 млн ₽, сроки 5–10 лет, правила вывода на лечение и расчет сложного процента с ОФЗ.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Надежность налоговых гарантий:</span>
+          <span style="color:#10b981;">100% защита государством (Налоговый кодекс РФ)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-green"></div>
+          <div class="risk-tick lvl-green"></div>
+          <div class="risk-tick"></div>
+          <div class="risk-tick"></div>
+        </div>
+      </div>
+
+      <h2>Таблица вычетов на взнос по прогрессивной шкале НДФЛ</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Годовой доход инвестора</th>
+              <th>Ставка НДФЛ</th>
+              <th>База взноса для вычета</th>
+              <th>Сумма возврата из бюджета</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>До 2.4 млн ₽ в год</td>
+              <td>13%</td>
+              <td>400 000 ₽</td>
+              <td><strong>52 000 ₽</strong></td>
+            </tr>
+            <tr>
+              <td>От 2.4 до 5.0 млн ₽</td>
+              <td>15%</td>
+              <td>400 000 ₽</td>
+              <td><strong>60 000 ₽</strong></td>
+            </tr>
+            <tr>
+              <td>От 5.0 до 20.0 млн ₽</td>
+              <td>18%</td>
+              <td>400 000 ₽</td>
+              <td><strong>72 000 ₽</strong></td>
+            </tr>
+            <tr>
+              <td>От 20.0 до 50.0 млн ₽</td>
+              <td>20%</td>
+              <td>400 000 ₽</td>
+              <td><strong>80 000 ₽</strong></td>
+            </tr>
+            <tr>
+              <td>Свыше 50.0 млн ₽</td>
+              <td>22%</td>
+              <td>400 000 ₽</td>
+              <td><strong>88 000 ₽</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- График темы 5 -->
+      <div class="chart-container">
+        <div class="chart-caption">📈 Накопление капитала на ИИС-3 (Взнос 400 000 ₽/год + ОФЗ 12% + Реинвестирование вычета 13%)</div>
+        <canvas id="chartTopic5" height="230"></canvas>
+      </div>
+
+      <div class="card card-risk">
+        <h3>Ключевые условия и регламенты счетов ИИС-3</h3>
+        <ul>
+          <li><strong>Минимальный срок удержания:</strong> 5 лет для счетов, открытых в 2024–2026 годах (срок постепенно увеличивается до 10 лет к 2031 году).</li>
+          <li><strong>Льгота на финансовый результат:</strong> До <strong>30 000 000 ₽ прибыли</strong> освобождается от налога при закрытии счета после истечения минимального срока.</li>
+          <li><strong>Количество счетов:</strong> Разрешено одновременно иметь <strong>до 3 счетов ИИС-3</strong> у разных брокеров.</li>
+          <li><strong>Досрочный вывод:</strong> Вывод средств закрывает счет с аннулированием льгот и возвратом вычетов с уплатой пеней (1/300 ставки ЦБ в день). <em>Единственное исключение: оплата дорогостоящего лечения по перечню Правительства РФ без закрытия счета.</em></li>
+          <li><strong>Ограничения:</strong> Запрещено покупать ценные бумаги иностранных эмитентов.</li>
+        </ul>
+      </div>
+
+      <!-- Тест к теме 5 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 5 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">1. Какую максимальную сумму прибыли от биржевой торговли можно полностью освободить от НДФЛ при закрытии ИИС-3 после истечения минимального срока?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">1 000 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">10 000 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 30 000 000 ₽ чистой прибыли</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Ограничений нет вообще</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">2. Сколько одновременно действующих счетов ИИС-3 разрешено иметь одному гражданину РФ?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Строго один</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">До трех счетов одновременно у одного или разных брокеров</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 10 счетов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Только при наличии статуса квалифицированного инвестора</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Инвестор платит НДФЛ по ставке 15% (доход от 2.4 до 5 млн ₽ в год). Сколько рублей вернет налоговая со взноса 400 000 ₽ на ИИС-3?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">60 000 ₽ (400 000 × 15%)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">52 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">88 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">400 000 ₽</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. В каком исключительном случае разрешено снять деньги с ИИС-3 досрочно без потери налоговых льгот и без закрытия счета?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Покупка первой квартиры в ипотеку</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Покупка отечественного автомобиля</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Оплата свадебного торжества</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Оплата дорогостоящих медицинских услуг из правительственного перечня</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Каков лимит максимального пополнения счета ИИС-3 в календарный год?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Строго до 1 000 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Ограничений по сумме пополнения нет (вносить можно любые суммы, но база для вычета на взнос — макс. 400 000 ₽)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">До 500 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Не более 3 окладов</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 6: ФЬЮЧЕРСЫ -->
+    <section class="topic-screen" id="screen-6">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Фьючерсы: Срочный рынок и кредитное плечо</h1>
+      <p class="lead-paragraph">Механика торговли деривативами: спецификации контрактов, гарантийное обеспечение (ГО), встроенное кредитное плечо, клиринговые сессии, вариационная маржа, контанго, бэквордация и Margin Call.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Уровень риска срочного рынка:</span>
+          <span style="color:#ef4444;">Экстремальный (риск мгновенной потери ГО при плече)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+        </div>
+      </div>
+
+      <!-- SVG диаграмма плеча фьючерса -->
+      <div class="svg-diagram-card">
+        <svg viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+          <rect x="30" y="30" width="540" height="40" rx="8" fill="#172033" stroke="#2b384e" stroke-width="2"/>
+          <rect x="30" y="30" width="80" height="40" rx="8" fill="#ef4444"/>
+          <text x="70" y="55" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle" font-family="sans-serif">ГО: 15%</text>
+          <text x="330" y="55" fill="#94a3b8" font-size="12" text-anchor="middle" font-family="sans-serif">Бесплатное встроенное плечо биржи: 85% объема контракта</text>
+
+          <text x="300" y="105" fill="#f87171" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Двусторонний эффект кредитного рычага:</text>
+          <text x="300" y="128" fill="#cbd5e1" font-size="12" text-anchor="middle" font-family="sans-serif">Рост базового актива на +5% приносит +33% чистой прибыли на депозит ГО.</text>
+          <text x="300" y="148" fill="#ef4444" font-size="12" text-anchor="middle" font-family="sans-serif">Но падение актива на -15% полностью уничтожает внесенное обеспечение!</text>
+        </svg>
+        <div class="svg-caption-text">Структура гарантийного обеспечения (ГО) и кредитного плеча во фьючерсном контракте</div>
+      </div>
+
+      <h2>Клиринг и вариационная маржа</h2>
+      <p>На срочном рынке Московской Биржи перерасчет позиций происходит <strong>дважды в день</strong>:</p>
+      <ul>
+        <li><strong>Промежуточный (дневной) клиринг:</strong> 14:00 – 14:05.</li>
+        <li><strong>Основной (вечерний) клиринг:</strong> 18:50 – 19:05.</li>
+      </ul>
+      <p>В эти окна биржа рассчитывает финансовый результат: если рынок шел в вашу сторону — вариационная маржа начисляется рублями на баланс. Если цена пошла против позиции — деньги списываются. Если остаток на счете опускается ниже величины минимального ГО, наступает <strong>Margin Call</strong>: брокер требует довнести деньги или принудительно закрывает сделку по рыночной цене.</p>
+
+      <div class="card card-risk">
+        <h3>Пример расчета сделки с фьючерсом на нефть Brent</h3>
+        <p>Полная стоимость контракта на нефть — <strong>100 000 ₽</strong>. Требуемое биржевое ГО — <strong>15 000 ₽</strong> (плечо ~6.6x). Трейдер покупает 1 контракт Long.</p>
+        <div class="math-box">
+          <div class="math-row"><span>Внесено ГО на счет:</span><span>15 000.00 ₽</span></div>
+          <div class="math-row"><span>Нефть выросла всего на +3%:</span><span>+3 000.00 ₽ к стоимости контракта</span></div>
+          <div class="math-row"><span>Начислено маржи в клиринг:</span><span>+3 000.00 ₽</span></div>
+          <div class="math-row"><span>Доходность на вложенный депозит ГО:</span><span style="color:#10b981;">+20% за пару торговых часов!</span></div>
+          <div class="math-row"><span>⚠️ При падении цены нефти на 15%:</span><span style="color:#ef4444;">Убыток -15 000 ₽ (ликвидация депозита)</span></div>
+        </div>
+      </div>
+
+      <!-- Тест к теме 6 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 6 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">1. Что произойдет в день экспирации расчетного фьючерса на индекс Мосбиржи?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Инвестору привезут акции всех 50 компаний на дом</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Биржа проведет окончательные денежные взаиморасчеты (вариационную маржу), и контракт автоматически закроется</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Брокер начислит штраф 10 000 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Контракт бессрочно перенесется на следующий год</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">2. За чей счет трейдер получает кредитное плечо при торговле фьючерсами?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Брокер выдает кредит под 30% годовых</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">За счет госбюджета</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Плечо бесплатно заложено в механизм гарантийного обеспечения (ГО): биржа блокирует только залоговую часть стоимости актива</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">За счет налогового вычета</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Когда на Московской Бирже начисляется и списывается вариационная маржа по фьючерсам?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Дважды в день в клиринговые окна (14:00 и 18:50)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Один раз в конце года</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Только в дату экспирации контракта</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">В момент звонка брокера</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Что означает состояние рынка «Контанго» (Contango)?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Запрет коротких продаж (шортов)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Фьючерс торгуется дешевле базового актива</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Резкий крах фондового рынка</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Фьючерсный контракт торгуется дороже текущей спотовой цены базового актива</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. С какой целью институциональные инвесторы используют продажу фьючерсов на индекс?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Ради получения дивидендов</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Для хеджирования: шорт фьючерса компенсирует просадку физического портфеля акций во время рыночного обвала</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Для снижения комиссии за депозитарий</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Для отмены налогообложения</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 7: ОПЦИОНЫ -->
+    <section class="topic-screen" id="screen-7">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Опционы: Асимметрия риска и стратегии</h1>
+      <p class="lead-paragraph">Нелинейные контракты Call и Put, права покупателя и обязанности продавца, страйк, премия, статусы ITM/ATM/OTM, временной распад Тета (Theta) и стратегия Стрэддл.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Сложность понимания математики опционов:</span>
+          <span style="color:#ef4444;">Продвинутый уровень (греки, волатильность)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+          <div class="risk-tick lvl-red"></div>
+        </div>
+      </div>
+
+      <h2>Матрица базовых позиций в опционах</h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Позиция</th>
+              <th>Ожидание рынка</th>
+              <th>Максимальный доход</th>
+              <th>Максимальный риск</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Покупка Call (Long Call)</strong></td>
+              <td>Взрывной рост</td>
+              <td>Не ограничен</td>
+              <td>Строго уплаченная премия</td>
+            </tr>
+            <tr>
+              <td><strong>Покупка Put (Long Put)</strong></td>
+              <td>Глубокий обвал</td>
+              <td>До цены страйка (~100%)</td>
+              <td>Строго уплаченная премия</td>
+            </tr>
+            <tr>
+              <td><strong>Продажа Call (Short Call)</strong></td>
+              <td>Падение или боковик</td>
+              <td>Только полученная премия</td>
+              <td>Не ограничен (опаснейшая позиция!)</td>
+            </tr>
+            <tr>
+              <td><strong>Продажа Put (Short Put)</strong></td>
+              <td>Рост или боковик</td>
+              <td>Только полученная премия</td>
+              <td>Риск выкупа рухнувшего актива</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- График темы 7 -->
+      <div class="chart-container">
+        <div class="chart-caption">📊 Профили P&L (Прибыль / Убыток) Покупателя Call и Покупателя Put (Страйк = 100 ₽, Премия = 5 ₽)</div>
+        <canvas id="chartTopic7" height="230"></canvas>
+      </div>
+
+      <div class="card card-accent">
+        <h3>Временной распад: Тета (Theta)</h3>
+        <p>Опцион — это «тающий лед». У него есть строгая дата экспирации. Каждый прошедший день уменьшает временную стоимость контракта. Даже если цена базового актива стоит на месте, купленный опцион <strong>дешевеет каждый день в пользу его продавца</strong>. Покупателю нужно не просто угадать направление движения, но и уложиться в отведенное время.</p>
+      </div>
+
+      <!-- Тест к теме 7 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 7 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">1. Инвестор купил опцион Put со страйком 200 ₽ за премию 15 ₽. При какой цене акции на дату экспирации сделка выйдет в безубыток?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">215.00 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">185.00 ₽ (Страйк 200 - Премия 15)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">200.00 ₽</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">15.00 ₽</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">2. В чем главное преимущество ПОКУПАТЕЛЯ опциона перед держателем фьючерса?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">По опциону начисляются купоны</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Опцион не имеет срока экспирации</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">У покупателя опциона нет риска Margin Call: максимальный убыток заранее ограничен размером уплаченной премии</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Опционы освобождены от налогов</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Что означает статус «В деньгах» (In the Money — ITM) для опциона Call?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Текущая рыночная цена актива строго выше страйка опциона</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Цена упала до нуля</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Премия опциона стала отрицательной</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Биржа отменила контракт</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Почему продажа «голых» опционов Call без покрытия считается самой рискованной стратегией на бирже?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">По ним нужно платить дивиденды</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">За них берут тройную комиссию</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Они торгуются только ночью</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Потенциальный убыток продавца Call теоретически не ограничен, так как цена актива вверх может вырасти бесконечно</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Какая конструкция называется опционным «Стрэддлом» (Straddle)?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Одновременная продажа акций и покупка ОФЗ</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Одновременная покупка Call и Put с одинаковым страйком и экспирацией (ставка на сильнейшее движение рынка в любую сторону)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Отказ от исполнения опциона</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Покупка 100 фьючерсов на нефть</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- СТРАНИЦА 8: СТРУКТУРНЫЕ НОТЫ -->
+    <section class="topic-screen" id="screen-8">
+      <div class="reading-time-pill">⏱️ Время изучения: ~5 минут</div>
+      <h1>Структурные ноты: Архитектура и скрытые риски</h1>
+      <p class="lead-paragraph">Конструкция продуктов со 100% защитой капитала, коэффициент участия, кредитный риск банка-эмитента, ноты с барьером автоколла (Autocall) «Worst-Of» и скрытая маржа инвестбанков.</p>
+
+      <div class="risk-panel">
+        <div class="risk-header">
+          <span>Уровень структурных и барьерных рисков:</span>
+          <span style="color:#f59e0b;">Высокий (барьеры «Worst-Of»)</span>
+        </div>
+        <div class="risk-scale">
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick lvl-yellow"></div>
+          <div class="risk-tick"></div>
+        </div>
+      </div>
+
+      <!-- SVG диаграмма структуры ноты -->
+      <div class="svg-diagram-card">
+        <svg viewBox="0 0 600 170" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="20" width="560" height="70" rx="10" fill="#172033" stroke="#3b82f6" stroke-width="2"/>
+          <rect x="30" y="30" width="450" height="50" rx="8" fill="#1e3a8a"/>
+          <text x="255" y="60" fill="#bfdbfe" font-size="13" font-weight="bold" text-anchor="middle" font-family="sans-serif">Защитная часть: 85% капитала в ОФЗ / Депозит под процент</text>
+          
+          <rect x="490" y="30" width="80" height="50" rx="8" fill="#f59e0b"/>
+          <text x="530" y="60" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle" font-family="sans-serif">Опцион 15%</text>
+
+          <text x="300" y="125" fill="#ffffff" font-size="13" text-anchor="middle" font-family="sans-serif">К концу срока 850 000 ₽ гарантированно вырастают обратно в 1 000 000 ₽.</text>
+          <text x="300" y="148" fill="#94a3b8" font-size="11" text-anchor="middle" font-family="sans-serif">А 150 000 ₽ дают неограниченную доходность, если рынок акций вырос.</text>
+        </svg>
+        <div class="svg-caption-text">Конструкция классической структурной ноты со 100% защитой капитала</div>
+      </div>
+
+      <h2>Подводные камни нот с барьером «Worst-Of» (По худшей акции)</h2>
+      <div class="card card-risk">
+        <p>Банки активно продают ноты с купоном <strong>до 25–30% годовых</strong>. В корзину помещаются 4 акции (например, Сбер, Лукойл, Яндекс, Ozon). Защитный барьер купона — <strong>70%</strong> от стартовой цены.</p>
+        <div class="math-box">
+          <div class="math-row"><span>Сбербанк:</span><span style="color:#10b981;">+25% (Выше старта)</span></div>
+          <div class="math-row"><span>Лукойл:</span><span style="color:#10b981;">+15% (Выше старта)</span></div>
+          <div class="math-row"><span>Яндекс:</span><span style="color:#10b981;">+5% (Выше старта)</span></div>
+          <div class="math-row"><span>Ozon (пробил барьер):</span><span style="color:#ef4444;">-35% (Упал ниже 70% от старта)</span></div>
+          <div class="math-row"><span>ИТОГ ДЛЯ ИНВЕСТОРА:</span><span style="color:#ef4444;">Защита полностью ликвидирована!</span></div>
+          <div class="math-row"><span>Результат на экспирации:</span><span>Инвестор получает не деньги, а подешевевшие акции Ozon с убытком -35%</span></div>
+        </div>
+      </div>
+
+      <!-- Тест к теме 8 -->
+      <div class="quiz-card-group">
+        <div class="quiz-group-title">
+          <h3>Проверочный тест: Тема 8 (5 вопросов)</h3>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="2">
+          <div class="quiz-q-text">1. Если структурная нота имеет «100% защиту капитала», какой существенный риск все равно несет инвестор?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Рисков нет вообще</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Риск падения цен на нефть</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Кредитный риск банкротства банка-эмитента ноты + инфляционный риск (деньги вернутся без процентов)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Риск блокировки со стороны ООН</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">2. Что такое «Автоколл» (Autocall) в структурном продукте?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Звонок менеджера с предложением пополнить баланс</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Условие досрочного закрытия ноты с выплатой номинала и купона, если в дату наблюдения все базовые активы оказались выше стартовой цены</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Штраф за досрочный вывод средств</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Перевод ноты в валюту</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="0">
+          <div class="quiz-q-text">3. Почему грамотный инвестор может собрать структурную ноту самостоятельно выгоднее, чем купить ее в банке?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Инвестор сам покупает ОФЗ на 85% капитала и опционы Call на 15%, экономя от 3% до 6% скрытой маржи банка</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Физлицам запрещено покупать ОФЗ в банках</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Банк не умеет рассчитывать проценты</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Государство субсидирует самостоятельные сделки</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="3">
+          <div class="quiz-q-text">4. Что происходит с ликвидностью структурной ноты, если инвестору срочно потребовались деньги в середине срока?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Ее можно сдать в кассу банка без потерь в любой день</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Она продается по номиналу за 1 секунду</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Биржа обменяет ее на слиток золота</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Вторичный рынок нот крайне неликвиден: эмитент выкупает бумагу с огромным штрафным дисконтом (потеря 15–30% капитала)</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+
+        <div class="quiz-block" data-correct-idx="1">
+          <div class="quiz-q-text">5. Для какой категории инвесторов в РФ доступно большинство сложных структурных продуктов с барьерами?</div>
+          <div class="quiz-options-list">
+            <button class="btn-option" onclick="handleQuizClick(this, 0)">Для всех без исключения</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 1)">Только для квалифицированных инвесторов (или после успешной сдачи тестирования ЦБ РФ)</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 2)">Только для госслужащих</button>
+            <button class="btn-option" onclick="handleQuizClick(this, 3)">Только для юридических лиц с капиталом от 1 млрд ₽</button>
+          </div>
+          <div class="feedback-panel"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+  <footer class="bottom-nav-bar">
+    <button class="btn-nav btn-nav-prev" id="btnPrevScreen" type="button" disabled>← Назад</button>
+    <button class="btn-nav btn-nav-next" id="btnNextScreen" type="button">Далее →</button>
+  </footer>
+
+  <!-- ВЫДВИЖНОЕ ОГЛАВЛЕНИЕ -->
+  <div class="drawer-scrim" id="drawerScrim">
+    <div class="drawer-panel" id="drawerPanel">
+      <div class="drawer-header">
+        <h3>Содержание методички</h3>
+        <button class="btn-drawer-close" id="closeDrawerBtn" type="button">×</button>
+      </div>
+      <div class="drawer-links-box">
+        <div class="drawer-topic-link current-link" onclick="switchTopic(1)">
+          <span>1. Хранение денег vs Инвестиции (USD/RUB)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(2)">
+          <span>2. Облигации и ОФЗ (НКД, YTM, дюрация)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(3)">
+          <span>3. Акции (Дивиденды, P/E, EV/EBITDA, отсечка)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(4)">
+          <span>4. ПИФ и Пай (СЧА, комиссии TER, БПИФ)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(5)">
+          <span>5. ИИС (ИИС-3, вычеты до 88 000 ₽, НДФЛ)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(6)">
+          <span>6. Фьючерсы (ГО, плечи, клиринг, Margin Call)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(7)">
+          <span>7. Опционы (Call/Put, P&L, страйк, тета)</span>
+          <span>→</span>
+        </div>
+        <div class="drawer-topic-link" onclick="switchTopic(8)">
+          <span>8. Структурные ноты (Барьеры, Autocall, риски)</span>
+          <span>→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- СКРИПТ ПРИЛОЖЕНИЯ -->
+  <script>
+    // Текущий экран и графики
+    let activeIndex = 1;
+    const totalCount = 8;
+    const renderedCharts = {};
+
+    // Элементы интерфейса
+    const openDrawerBtn = document.getElementById('openDrawerBtn');
+    const closeDrawerBtn = document.getElementById('closeDrawerBtn');
+    const drawerScrim = document.getElementById('drawerScrim');
+    const drawerPanel = document.getElementById('drawerPanel');
+    const btnPrevScreen = document.getElementById('btnPrevScreen');
+    const btnNextScreen = document.getElementById('btnNextScreen');
+    const counterDisplay = document.getElementById('counterDisplay');
+    const barFill = document.getElementById('barFill');
+
+    // Открытие и закрытие оглавления
+    function openDrawer() {
+      drawerScrim.classList.add('open');
+    }
+
+    function closeDrawer() {
+      drawerScrim.classList.remove('open');
+    }
+
+    openDrawerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openDrawer();
+    });
+
+    closeDrawerBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeDrawer();
+    });
+
+    drawerScrim.addEventListener('click', (e) => {
+      if (!drawerPanel.contains(e.target)) {
+        closeDrawer();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawerScrim.classList.contains('open')) {
+        closeDrawer();
+      }
+    });
+
+    // Переключение тем
+    function switchTopic(index) {
+      if (index < 1 || index > totalCount) return;
+
+      document.getElementById(`screen-${activeIndex}`).classList.remove('active');
+      activeIndex = index;
+      document.getElementById(`screen-${activeIndex}`).classList.add('active');
+
+      // Обновление заголовка и прогресса
+      counterDisplay.innerText = `Тема ${activeIndex} из ${totalCount}`;
+      barFill.style.width = `${(activeIndex / totalCount) * 100}%`;
+
+      // Состояние кнопок навигации
+      btnPrevScreen.disabled = (activeIndex === 1);
+      if (activeIndex === totalCount) {
+        btnNextScreen.innerText = 'Курс завершен ✓';
+      } else {
+        btnNextScreen.innerText = 'Далее →';
+      }
+
+      // Подсветка в оглавлении
+      const links = document.querySelectorAll('.drawer-topic-link');
+      links.forEach((link, idx) => {
+        if (idx + 1 === activeIndex) {
+          link.classList.add('current-link');
+        } else {
+          link.classList.remove('current-link');
+        }
+      });
+
+      // Плавный скролл наверх и закрытие оглавления
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeDrawer();
+
+      // Отрисовка графиков выбранной темы
+      renderChartsForTopic(activeIndex);
+    }
+
+    btnPrevScreen.addEventListener('click', () => {
+      if (activeIndex > 1) switchTopic(activeIndex - 1);
+    });
+
+    btnNextScreen.addEventListener('click', () => {
+      if (activeIndex < totalCount) {
+        switchTopic(activeIndex + 1);
+      } else {
+        alert('Поздравляем! Вы полностью изучили все 8 фундаментальных тем методички Павла Нестерова.');
+      }
+    });
+
+    // Интерактивное тестирование
+    function handleQuizClick(btn, choiceIdx) {
+      const block = btn.closest('.quiz-block');
+      const correctIdx = parseInt(block.getAttribute('data-correct-idx'), 10);
+      const feedback = block.querySelector('.feedback-panel');
+      const options = block.querySelectorAll('.btn-option');
+
+      // Блокировка повторных кликов
+      options.forEach(opt => opt.style.pointerEvents = 'none');
+
+      if (choiceIdx === correctIdx) {
+        btn.classList.add('correct-choice');
+        feedback.className = 'feedback-panel visible-correct';
+        feedback.innerHTML = `
+          <span class="status-badge">✓ Верно!</span>
+          Отличный ответ. Вы точно уловили экономический закон и финансовые правила работы инструмента.
+        `;
+      } else {
+        btn.classList.add('wrong-choice');
+        options[correctIdx].classList.add('correct-choice');
+        feedback.className = 'feedback-panel visible-wrong';
+        const correctText = options[correctIdx].innerText;
+        feedback.innerHTML = `
+          <span class="status-badge">✕ Неверно</span>
+          <strong>Правильный ответ:</strong> «${correctText}».<br>
+          <em>Обратите внимание на детали расчетов и финансовые регламенты, изложенные в материале темы.</em>
+        `;
+      }
+    }
+
+    // Инициализация графиков Chart.js
+    function renderChartsForTopic(id) {
+      if (renderedCharts[id]) return;
+
+      if (id === 1) {
+        const ctx1 = document.getElementById('chartTopic1').getContext('2d');
+        new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: ['Старт', '2 года', '4 года', '6 лет', '8 лет', '10 лет'],
+            datasets: [
+              {
+                label: 'Индекс акций (+9% в USD реальных)',
+                data: [10000, 11881, 14115, 16771, 19925, 23673],
+                borderColor: '#10b981',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderWidth: 2.5,
+                tension: 0.3
+              },
+              {
+                label: 'Замещающие бонды (+6% USD)',
+                data: [10000, 11236, 12624, 14185, 15938, 17908],
+                borderColor: '#3b82f6',
+                borderWidth: 2,
+                tension: 0.2
+              },
+              {
+                label: 'Наличный USD в сейфе (-4% инфляция США)',
+                data: [10000, 9216, 8493, 7827, 7213, 6648],
+                borderColor: '#f59e0b',
+                borderWidth: 2,
+                borderDash: [5, 5],
+                tension: 0.2
+              },
+              {
+                label: 'Рублевый кэш в USD (с учетом девальвации)',
+                data: [10000, 7500, 5625, 4218, 3164, 2373],
+                borderColor: '#ef4444',
+                borderWidth: 2,
+                borderDash: [3, 3],
+                tension: 0.2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } },
+              tooltip: {
+                callbacks: {
+                  label: (c) => `${c.dataset.label}: $${Math.round(c.raw).toLocaleString()}`
+                }
+              }
+            },
+            scales: {
+              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: '#1c273e' } },
+              y: { 
+                ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => '$' + v.toLocaleString() }, 
+                grid: { color: '#1c273e' } 
+              }
+            }
+          }
+        });
+        renderedCharts[id] = true;
+      }
+
+      if (id === 5) {
+        const ctx5 = document.getElementById('chartTopic5').getContext('2d');
+        new Chart(ctx5, {
+          type: 'bar',
+          data: {
+            labels: ['1 год', '2 года', '3 года', '4 года', '5 лет'],
+            datasets: [
+              {
+                label: 'Обычный брокерский счет (ОФЗ 12%)',
+                data: [448, 950, 1512, 2142, 2847],
+                backgroundColor: '#1c273e',
+                borderColor: '#2b384e',
+                borderWidth: 1
+              },
+              {
+                label: 'ИИС-3 (ОФЗ 12% + возврат НДФЛ 13% со взноса)',
+                data: [500, 1072, 1726, 2473, 3324],
+                backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                borderColor: '#10b981',
+                borderWidth: 1
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } },
+              tooltip: {
+                callbacks: {
+                  label: (c) => `${c.dataset.label}: ${c.raw.toLocaleString()} тыс. ₽`
+                }
+              }
+            },
+            scales: {
+              x: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: '#1c273e' } },
+              y: { 
+                ticks: { color: '#94a3b8', font: { size: 10 }, callback: v => v + ' тыс' }, 
+                grid: { color: '#1c273e' } 
+              }
+            }
+          }
+        });
+        renderedCharts[id] = true;
+      }
+
+      if (id === 7) {
+        const ctx7 = document.getElementById('chartTopic7').getContext('2d');
+        new Chart(ctx7, {
+          type: 'line',
+          data: {
+            labels: ['75', '85', '95 (Безубыток Put)', '100 (Страйк)', '105 (Безубыток Call)', '115', '125'],
+            datasets: [
+              {
+                label: 'P&L Покупателя Call (Страйк 100, Премия 5)',
+                data: [-5, -5, -5, -5, 0, 10, 20],
+                borderColor: '#3b82f6',
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderWidth: 2.5,
+                tension: 0
+              },
+              {
+                label: 'P&L Покупателя Put (Страйк 100, Премия 5)',
+                data: [20, 10, 0, -5, -5, -5, -5],
+                borderColor: '#f59e0b',
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                borderWidth: 2.5,
+                tension: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { labels: { color: '#94a3b8', font: { size: 10.5, family: 'Inter' } } }
+            },
+            scales: {
+              x: { 
+                title: { display: true, text: 'Рыночная цена базового актива на дату экспирации (₽)', color: '#94a3b8', font: { size: 10 } },
+                ticks: { color: '#94a3b8', font: { size: 10 } }, 
+                grid: { color: '#1c273e' } 
+              },
+              y: { 
+                title: { display: true, text: 'Чистая прибыль / Убыток (P&L)', color: '#94a3b8', font: { size: 10 } },
+                ticks: { color: '#94a3b8', font: { size: 10 } }, 
+                grid: { color: '#1c273e' } 
+              }
+            }
+          }
+        });
+        renderedCharts[id] = true;
+      }
+    }
+
+    // Инициализация приложения
+    window.addEventListener('DOMContentLoaded', () => {
+      renderChartsForTopic(1);
+    });
+  </script>
+</body>
+</html>
